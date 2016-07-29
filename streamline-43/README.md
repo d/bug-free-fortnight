@@ -27,6 +27,6 @@
   ln -sf ~/gpdb4/gpAux/ext/rhel5_x86_64/python-2.6.2 /opt
   ```
 0. You've been waiting for the next command:
-```
-make GPROOT=/usr/local dist
-```
+  ```
+  make GPROOT=/usr/local dist
+  ```
