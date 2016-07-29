@@ -16,12 +16,13 @@
   rsync -r /gpdb_src/.git/modules .git
   ```
 0. Now this: `git submodule update --init --recursive`
-0.
-    ```
-    cd gpAux
-    source /opt/gcc_env.sh
-    make sync_tools
-    ```
+0. don't forget the set the compiler and sync dependencies
+
+  ```
+  cd gpAux
+  source /opt/gcc_env.sh
+  make sync_tools
+  ```
 0. Important hack:
   ```
   ln -sf ~/gpdb4/gpAux/ext/rhel5_x86_64/python-2.6.2 /opt
