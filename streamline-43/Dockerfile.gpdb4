@@ -1,5 +1,6 @@
 FROM pivotaldata/centos511-java7-gpdb-dev-image
 
+# backport the no-tty fix from RHEL7 to RHEL5
 RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
 
 # generate server keys
@@ -12,7 +13,6 @@ RUN chmod g+w -R /opt /usr/local \
 	&& chgrp -R adm /opt /usr/local
 USER gpadmin
 
-RUN sudo service sshd start && ssh-keyscan localhost
 RUN ssh-keygen -f ~/.ssh/id_rsa \
 	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
 
