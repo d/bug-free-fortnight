@@ -31,3 +31,8 @@
   ```
   make GPROOT=/usr/local dist
   ```
+0. In order to spin up the demo cluster, you'll need to set (read: pollute) your environment
+  ```
+  source /usr/local/greenplum-db-devel/greenplum_path.sh
+  ```
+0. Now `make cluster` away: `make -C gpdemo`
