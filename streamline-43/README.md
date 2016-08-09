@@ -35,4 +35,4 @@
   ```
   source /usr/local/greenplum-db-devel/greenplum_path.sh
   ```
-0. Now `make cluster` away: `make -C gpdemo`
+0. Now make your demo cluster: `make -C gpdemo`
