@@ -42,7 +42,13 @@ create_container() {
 }
 
 workspace() {
-	dirname $(dirname $(dirname $0))
+	local whereami
+	whereami=$(
+		cd $(dirname $0)
+		pwd
+	)
+
+	dirname $(dirname ${whereami})
 }
 
 run_in_container() {
