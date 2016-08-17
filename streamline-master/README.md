@@ -1,8 +1,12 @@
 ## How to run `installcheck` locally ##
 
-0. `docker build -t streamline-master ~/workspace/ci-infrastructure/streamline-master`
-0. `docker run --rm -ti --volume ~/workspace:/workspace:ro streamline-master`
-0. Now that you are inside, the following command will build everything and then run ICG
-  ```
-  [gpadmin@95ed490cb4c5 build]$ /workspace/ci-infrastructure/streamline-master/build_the_universe.bash
-  ```
+#### Prerequisites ####
+The following repositories should be checked out in the same directory (e.g. ~/workspace)
+  0. gpos
+  0. orca
+  0. gp-xerces
+  0. gpdb
+
+#### A dummy's guide to running ICG ####
+0. `~/workspace/ci-infrastructure/streamline-master/uber.bash`
+0. profit

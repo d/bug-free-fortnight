@@ -1,9 +1,13 @@
 #!/bin/bash
 
 set -u -e -o pipefail
-set -x
 
 _main() {
+	# testing for unset variable
+	if [[ "${DEBUG+x}" = "x" ]]; then
+		set -x
+	fi
+
 	local image_id
 	image_id=$(build_image)
 
