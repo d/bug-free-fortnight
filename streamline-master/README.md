@@ -8,5 +8,5 @@ The following repositories should be checked out in the same directory (e.g. ~/w
   0. gpdb
 
 #### A dummy's guide to running ICG ####
-0. `~/workspace/ci-infrastructure/streamline-master/uber.bash`
+0. `~/workspace/bug-free-fortnight/streamline-master/uber.bash`
 0. profit

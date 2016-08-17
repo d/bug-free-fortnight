@@ -17,7 +17,7 @@ _main() {
 	trap "cleanup ${container_id}" EXIT
 
 	local path
-	path=/workspace/ci-infrastructure/streamline-master/build_the_universe.bash
+	path=/workspace/bug-free-fortnight/streamline-master/build_the_universe.bash
 	run_in_container ${container_id} ${path}
 
 }

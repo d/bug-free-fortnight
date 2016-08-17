@@ -1,5 +1,5 @@
 #!/bin/bash
-# docker build -t streamline-master ~/workspace/ci-infrastructure/streamline-master
+# docker build -t streamline-master ~/workspace/bug-free-fortnight/streamline-master
 # docker run --rm -ti --volume ~/workspace:/workspace:ro streamline-master
 
 set -u -e -o pipefail
