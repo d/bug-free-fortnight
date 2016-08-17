@@ -1,6 +1,6 @@
 #!/bin/bash
 # docker build -t streamline-master ~/workspace/ci-infrastructure/streamline-master
-# docker run --rm -ti --volume ~/workspace:$HOME/workspace:ro streamline-master
+# docker run --rm -ti --volume ~/workspace:/workspace:ro streamline-master
 
 set -u -e -o pipefail
 set -x
