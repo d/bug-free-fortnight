@@ -23,8 +23,12 @@ create_container() {
 	local image_id
 	image_id=$1
 	local workspace
-	workspace=$(dirname $(dirname $(dirname $0)))
+	workspace=$(workspace)
 	docker run --detach -ti --volume ${workspace}:/workspace:ro ${image_id}
+}
+
+workspace() {
+	dirname $(dirname $(dirname $0))
 }
 
 run_in_container() {
