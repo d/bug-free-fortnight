@@ -19,7 +19,7 @@ build_the_universe() {
 	mkdir -p /build/{install,gporca,gpos,gp-xerces}
 
 	cd /build/gp-xerces
-	/workspace/gp-xerces/configure --prefix ${prefix}
+	env CXX='ccache c++' CC='ccache cc' /workspace/gp-xerces/configure --prefix ${prefix}
 	make -j$(nproc) install
 
 	cd /build/gpos

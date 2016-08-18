@@ -19,3 +19,5 @@ RUN ssh-keygen -f ~/.ssh/id_rsa \
 CMD sudo service sshd start && /bin/bash -l
 WORKDIR /build
 RUN sudo chown -R gpadmin:gpadmin /build
+RUN sudo yum install -q -y ccache
+RUN mkdir ~/.ccache

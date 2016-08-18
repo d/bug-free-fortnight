@@ -38,7 +38,7 @@ create_container() {
 	image_id=$1
 	local workspace
 	workspace=$(workspace)
-	docker run --detach -ti --volume ${workspace}:/workspace:ro ${image_id}
+	docker run --detach -ti --volume gpdbccache:/home/gpadmin/.ccache --volume ${workspace}:/workspace:ro ${image_id}
 }
 
 workspace() {
