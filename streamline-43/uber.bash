@@ -105,7 +105,7 @@ run_in_container() {
 build_image() {
 	local dir
 	dir=$(dirname $0)
-	docker build -q ${dir} -f Dockerfile.gpdb4
+	docker build -q ${dir}
 }
 
 _main "$@"

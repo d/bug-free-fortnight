@@ -3,7 +3,7 @@
 0. Prerequisites:
   0. You have gpdb4 checked out on your computer.
   0. You have all the submodules updated on your host: `git submodule update --init --recursive`
-0. `docker build -t rofl ~/workspace/bug-free-fortnight/streamline-43 -f ~/workspace/bug-free-fortnight/streamline-43/Dockerfile.gpdb4`
+0. `docker build -t rofl ~/workspace/bug-free-fortnight/streamline-43`
 0. `docker run --rm -ti --volume ~/workspace/gpdb4:/gpdb_src:ro rofl`
 0. Now you're inside that container: run this
   ```
