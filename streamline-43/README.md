@@ -7,11 +7,11 @@
 0. `docker run --rm -ti --volume ~/workspace/gpdb4:/gpdb_src:ro rofl`
 0. Now you're inside that container: run this
   ```
-  git clone /gpdb_src ~/gpdb4
+  git clone /gpdb_src /build/gpdb4
   ```
 0. Change your working directory to the checkout inside the container:
   ```
-  cd ~/gpdb4
+  cd /build/gpdb4
   ```
 0. Now make all the objects available to git submodules:
   ```
@@ -31,10 +31,10 @@
   ```
 0. You've been waiting for the next command:
   ```
-  make GPROOT=/usr/local dist
+  make GPROOT=/build/install dist
   ```
 0. In order to spin up the demo cluster, you'll need to set (read: pollute) your environment
   ```
-  source /usr/local/greenplum-db-devel/greenplum_path.sh
+  source /build/install/greenplum-db-devel/greenplum_path.sh
   ```
 0. Now make your demo cluster: `make -C gpdemo`
