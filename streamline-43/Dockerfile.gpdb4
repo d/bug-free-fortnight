@@ -1,4 +1,4 @@
-FROM pivotaldata/centos511-java7-gpdb-dev-image
+FROM kuien/centos511-java7-gpdb-dev-image
 
 # backport the no-tty fix from RHEL7 to RHEL5
 RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers

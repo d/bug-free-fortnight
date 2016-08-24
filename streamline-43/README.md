@@ -1,11 +1,9 @@
 ## There are 21 Tricks to Speed Up 4.3_STABLE Development. I'm gonna tell you 6 ##
 
 0. Prerequisites:
-  0. Your Docker Hub user has access to the private image `pivotaldata/centos511-java7-gpdb-dev-image`
   0. You have gpdb4 checked out on your computer.
   0. You have all the submodules updated on your host: `git submodule update --init --recursive`
-0. `docker login`
-0. `docker build -t rofl ~/workspace/ci-infrastructure/streamline-43 -f ~/workspace/ci-infrastructure/streamline-43/Dockerfile.gpdb4`
+0. `docker build -t rofl ~/workspace/bug-free-fortnight/streamline-43 -f ~/workspace/bug-free-fortnight/streamline-43/Dockerfile.gpdb4`
 0. `docker run --rm -ti --volume ~/workspace/gpdb4:/gpdb_src:ro rofl`
 0. Now you're inside that container: run this
   ```
