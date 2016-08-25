@@ -6,8 +6,8 @@ set -x
 _main() {
 	local prefix
 	prefix=/build/install
-	build_the_universe ${prefix}
-	make_cluster ${prefix}
+	time build_the_universe ${prefix}
+	time make_cluster ${prefix}
 }
 
 build_the_universe() {
