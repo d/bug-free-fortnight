@@ -16,6 +16,8 @@ _main() {
 
 	trap "cleanup ${container_id}" EXIT
 
+	set_ccache_max_size ${container_id}
+
 	local path
 	path=/workspace/bug-free-fortnight/streamline-master/build_the_universe.bash
 	run_in_container ${container_id} ${path}
@@ -39,6 +41,14 @@ create_container() {
 	local workspace
 	workspace=$(workspace)
 	docker run --detach -ti --volume gpdbccache:/home/gpadmin/.ccache --volume ${workspace}:/workspace:ro ${image_id}
+}
+
+set_ccache_max_size() {
+	local container_id
+	readonly container_id=$1
+	local -r cache_size=8G
+
+	run_in_container ${container_id} "ccache -M ${cache_size}"
 }
 
 workspace() {
