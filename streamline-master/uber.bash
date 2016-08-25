@@ -14,7 +14,7 @@ _main() {
 	local container_id
 	container_id=$(create_container ${image_id})
 
-	trap "cleanup ${container_id}" EXIT
+	trap "cleanup ${container_id}" INT
 
 	set_ccache_max_size ${container_id}
 
