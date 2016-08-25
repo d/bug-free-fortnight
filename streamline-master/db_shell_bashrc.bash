@@ -10,7 +10,7 @@ _main() {
 
 pollute_env() {
 	: ${LD_LIBRARY_PATH:=}
-	: ${PYTHONHOME:=}
+	: ${PYTHONHOME:=$(default_python_home)}
 
 	source /build/install/greenplum_path.sh
 	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
@@ -18,6 +18,13 @@ pollute_env() {
 
 useful_prompt() {
 	PS1='\w \h\$ '
+}
+
+default_python_home() {
+	python <<-EOF
+	import sys
+	print(sys.prefix)
+	EOF
 }
 
 friendly_message() {
