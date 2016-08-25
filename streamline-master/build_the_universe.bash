@@ -1,6 +1,4 @@
 #!/bin/bash
-# docker build -t streamline-master ~/workspace/bug-free-fortnight/streamline-master
-# docker run --rm -ti --volume ~/workspace:/workspace:ro streamline-master
 
 set -u -e -o pipefail
 set -x
@@ -10,7 +8,6 @@ _main() {
 	prefix=/build/install
 	build_the_universe ${prefix}
 	make_cluster ${prefix}
-	$(dirname $0)/icg.bash
 }
 
 build_the_universe() {

@@ -18,8 +18,10 @@ _main() {
 
 	set_ccache_max_size ${container_id}
 
-	local path
-	path=/workspace/bug-free-fortnight/streamline-master/build_the_universe.bash
+	echo "Building Xerces, GPOS, ORCA, and GPDB"
+	echo "When it is done, run the following command to interact with the cluster, or run ICG:"
+	echo "docker exec -ti ${container_id} /workspace/bug-free-fortnight/streamline-master/db_shell.bash"
+	local -r path=/workspace/bug-free-fortnight/streamline-master/build_the_universe.bash
 	run_in_container ${container_id} ${path}
 
 }
