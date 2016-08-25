@@ -16,7 +16,9 @@ _main() {
 
 	trap "cleanup ${container_id}" INT
 
-	friendly_message ${container_id}
+	local container_name
+	readonly container_name="$(container_name ${container_id})"
+	friendly_message ${container_name}
 
 	set_ccache_max_size ${container_id}
 
@@ -26,15 +28,18 @@ _main() {
 }
 
 friendly_message() {
-	local container_id
-	readonly container_id=$1
-
 	local container_name
-	readonly container_name="$(docker ps --format '{{.Names}}' --filter id=${container_id})"
+	readonly container_name=$1
 
 	echo "Building Xerces, GPOS, ORCA, and GPDB"
 	echo "When it is done, run the following command to interact with the cluster, or run ICG:"
 	echo "docker exec -ti ${container_name} /workspace/bug-free-fortnight/streamline-master/db_shell.bash"
+}
+
+container_name() {
+	local container_id
+	readonly container_id=$1
+	docker ps --format '{{.Names}}' --filter id=${container_id}
 }
 
 cleanup() {
