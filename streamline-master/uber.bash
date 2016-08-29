@@ -11,6 +11,8 @@ _main() {
 	local image_id
 	image_id=$(build_image)
 
+	build_orca
+
 	local container_id
 	container_id=$(create_container ${image_id})
 
@@ -25,6 +27,20 @@ _main() {
 	local -r path=/workspace/bug-free-fortnight/streamline-master/build_the_universe.bash
 	run_in_container ${container_id} ${path}
 
+}
+
+build_orca() {
+	local workspace
+	readonly workspace=$(workspace)
+
+	docker run --rm -ti \
+		--volume gpdbccache:/ccache \
+		--volume orca:/orca \
+		--volume ${workspace}:/workspace:ro \
+		--env CCACHE_DIR=/ccache \
+		--env CCACHE_UMASK=0000 \
+		yolo/orcadev:centos5 \
+		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
 }
 
 friendly_message() {
@@ -57,8 +73,13 @@ create_container() {
 	local image_id
 	image_id=$1
 	local workspace
-	workspace=$(workspace)
-	docker run --detach -ti --volume gpdbccache:/home/gpadmin/.ccache --volume ${workspace}:/workspace:ro ${image_id}
+	readonly workspace=$(workspace)
+	docker run --detach -ti \
+		--volume gpdbccache:/ccache \
+		--volume orca:/orca:ro \
+		--volume ${workspace}:/workspace:ro \
+		--env CCACHE_DIR=/ccache \
+		${image_id}
 }
 
 set_ccache_max_size() {

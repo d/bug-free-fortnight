@@ -6,6 +6,9 @@ set -x
 _main() {
 	local prefix
 	prefix=/build/install
+
+	mkdir -p ${prefix}
+	time tar xf /orca/bin_orca.tar -C ${prefix}
 	time build_the_universe ${prefix}
 	time make_cluster ${prefix}
 }
@@ -13,22 +16,9 @@ _main() {
 build_the_universe() {
 	local prefix
 	prefix=$1
-	mkdir -p /build/{install,gporca,gpos,gp-xerces}
-
-	cd /build/gp-xerces
-	env CXX='ccache c++' CC='ccache cc' /workspace/gp-xerces/configure --prefix ${prefix}
-	make -j$(nproc) install
-
-	cd /build/gpos
-	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gpos
-	make -j$(nproc) install
-
-	cd /build/gporca
-	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
-	make -j$(nproc) install
 
 	cd /build
-	git clone /workspace/gpdb
+	git clone --shared /workspace/gpdb
 	cd gpdb
 	env CXX='ccache c++' CC='ccache cc' ./configure --enable-orca --enable-mapreduce --with-perl --with-libxml --with-python --disable-gpfdist --prefix=${prefix} --with-includes=${prefix}/include --with-libs=${prefix}/lib
 	make -j$(nproc) install
