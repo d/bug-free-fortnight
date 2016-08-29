@@ -9,6 +9,7 @@ _main() {
 
 	mkdir -p ${prefix}
 	time tar xf /orca/bin_orca.tar -C ${prefix}
+	time tar xf /orca/bin_xerces.tar -C ${prefix}
 	time build_the_universe ${prefix}
 	time make_cluster ${prefix}
 }

@@ -5,7 +5,9 @@ set -x
 
 _main() {
 	local -r prefix=/build/install
+	local -r xerces_prefix=/build/install.xerces
 
+	mkdir -p ${xerces_prefix}
 	mkdir -p /build/{install,xerces,gpos,orca}
 
 	time build_xerces
@@ -19,7 +21,7 @@ _main() {
 build_xerces() {
 	cd /build/xerces
 
-	env CXX='ccache c++' CC='ccache cc' /workspace/gp-xerces/configure --prefix ${prefix}
+	env CXX='ccache c++' CC='ccache cc' /workspace/gp-xerces/configure --prefix ${xerces_prefix}
 	make -j32 -l8 install
 }
 
@@ -31,11 +33,12 @@ build_gpos() {
 
 build_orca() {
 	cd /build/orca
-	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
+	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
 	make -j32 -l8 install
 }
 
 copy_output() {
+	tar cf ${output}/bin_xerces.tar -C ${xerces_prefix} .
 	tar cf ${output}/bin_orca.tar -C ${prefix} .
 }
 
