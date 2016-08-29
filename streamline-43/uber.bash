@@ -69,7 +69,7 @@ cleanup() {
 	local workspace
 	workspace=$(workspace)
 
-	docker cp ${container_id}:/build/gpdb4/src/test/regress/regression.diffs ${workspace}/gpdb/src/test/regress || :
+	docker cp ${container_id}:/build/gpdb4/src/test/regress/regression.diffs ${workspace}/gpdb4/src/test/regress || :
 	docker rm --force ${container_id}
 }
 
