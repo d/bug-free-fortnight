@@ -24,7 +24,7 @@ _main() {
 
 	set_ccache_max_size ${container_id}
 
-	local -r path=/workspace/bug-free-fortnight/streamline-master/build_the_universe.bash
+	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
 	run_in_container ${container_id} ${path}
 
 }
