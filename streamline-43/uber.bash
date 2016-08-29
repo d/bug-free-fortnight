@@ -11,6 +11,8 @@ _main() {
 	local image_id
 	readonly image_id=$(build_image)
 
+	build_orca
+
 	local container_id
 	readonly container_id=$(create_container ${image_id})
 
@@ -44,6 +46,20 @@ build_gpdb4() {
 
 	local -r path=/workspace/${relpath}/build_gpdb4.bash
 	run_in_container ${container_id} "/bin/bash -i ${path}"
+}
+
+build_orca() {
+	local workspace
+	readonly workspace=$(workspace)
+
+	docker run --rm -ti \
+		--volume gpdbccache:/ccache \
+		--volume orca:/orca \
+		--volume ${workspace}:/workspace:ro \
+		--env CCACHE_DIR=/ccache \
+		--env CCACHE_UMASK=0000 \
+		yolo/orcadev:centos5 \
+		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
 }
 
 cleanup() {
