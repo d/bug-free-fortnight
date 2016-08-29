@@ -21,7 +21,11 @@ build_the_universe() {
 	cd /build
 	git clone --shared /workspace/gpdb
 	cd gpdb
-	env CXX='ccache c++' CC='ccache cc' ./configure --enable-orca --enable-mapreduce --with-perl --with-libxml --with-python --disable-gpfdist --prefix=${prefix} --with-includes=${prefix}/include --with-libs=${prefix}/lib
+	env \
+		CXX='ccache c++' \
+		BLD_CXX='ccache c++' \
+		CC='ccache cc' \
+		./configure --enable-orca --enable-mapreduce --with-perl --with-libxml --with-python --disable-gpfdist --prefix=${prefix} --with-includes=${prefix}/include --with-libs=${prefix}/lib
 	make -j$(nproc) install
 }
 
