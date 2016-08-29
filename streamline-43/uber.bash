@@ -2,6 +2,8 @@
 
 set -u -e -o pipefail
 
+source $(dirname $0)/../common.bash
+
 _main() {
 	# testing for unset variable
 	if [[ "${DEBUG+x}" = "x" ]]; then
@@ -18,7 +20,7 @@ _main() {
 
 	trap "cleanup ${container_id}" EXIT
 
-	set_ccache_max_size ${container_id}
+	set_ccache_max_size
 
 	local -r relpath=$(relpath_from_workspace)
 
@@ -48,23 +50,9 @@ build_gpdb4() {
 	run_in_container ${container_id} "/bin/bash -i ${path}"
 }
 
-build_orca() {
-	local workspace
-	readonly workspace=$(workspace)
-
-	docker run --rm -ti \
-		--volume gpdbccache:/ccache \
-		--volume orca:/orca \
-		--volume ${workspace}:/workspace:ro \
-		--env CCACHE_DIR=/ccache \
-		--env CCACHE_UMASK=0000 \
-		yolo/orcadev:centos5 \
-		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
-}
-
 cleanup() {
 	local container_id
-	container_id=$1
+	readonly container_id=$1
 
 	local workspace
 	workspace=$(workspace)
@@ -86,47 +74,10 @@ create_container() {
 		${image_id}
 }
 
-set_ccache_max_size() {
-	local container_id
-	readonly container_id=$1
-	local -r cache_size=8G
-
-	run_in_container ${container_id} "ccache -M ${cache_size}"
-}
-
 relpath_from_workspace() {
 	local -r whereami=$(absdir)
 	local -r this_dir=$(basename ${whereami})
 	echo $(basename $(dirname ${whereami}))/${this_dir}
-}
-
-workspace() {
-	local -r whereami=$(absdir)
-
-	dirname $(dirname ${whereami})
-}
-
-absdir() {
-	(
-	cd "$(dirname "$0")"
-	pwd
-	)
-}
-
-run_in_container() {
-	local container_id
-	local path
-
-	container_id=$1
-	path=$2
-
-	docker exec ${container_id} ${path}
-}
-
-build_image() {
-	local dir
-	dir=$(dirname $0)
-	docker build -q ${dir}
 }
 
 _main "$@"
