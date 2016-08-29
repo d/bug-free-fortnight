@@ -62,7 +62,12 @@ create_container() {
 	image_id=$1
 	local workspace
 	workspace=$(workspace)
-	docker run --detach -ti --volume gpdb4releng:/opt/releng --volume gpdbccache:/home/gpadmin/.ccache --volume ${workspace}:/workspace:ro ${image_id}
+	docker run --detach -ti \
+		--volume gpdbccache:/ccache \
+		--volume gpdb4releng:/opt/releng \
+		--volume ${workspace}:/workspace:ro \
+		--env CCACHE_DIR=/ccache \
+		${image_id}
 }
 
 set_ccache_max_size() {
