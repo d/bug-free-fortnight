@@ -4,7 +4,12 @@ set -e -u -o pipefail
 set -x
 
 _main() {
+	inject_orca
 	build_gpdb4
+}
+
+inject_orca() {
+	tar xf /orca/bin_orca.tar -C /build/gpdb4/gpAux/ext/rhel5_x86_64
 }
 
 build_gpdb4() {
