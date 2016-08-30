@@ -47,6 +47,11 @@ set_ccache_max_size() {
 
 	docker run --rm \
 		--volume gpdbccache:/ccache \
+		yolo/gpdbdev:centos6 \
+		chmod a+rw /ccache
+
+	docker run --rm \
+		--volume gpdbccache:/ccache \
 		--env CCACHE_DIR=/ccache \
 		--env CCACHE_UMASK=0000 \
 		yolo/gpdbdev:centos6 \
