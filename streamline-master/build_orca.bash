@@ -22,19 +22,19 @@ build_xerces() {
 	cd /build/xerces
 
 	env CXX='ccache c++' CC='ccache cc' /workspace/gp-xerces/configure --prefix ${xerces_prefix}
-	make -j36 -l16 install
+	make -j16 -l16 install
 }
 
 build_gpos() {
 	cd /build/gpos
 	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gpos
-	make -j36 -l16 install
+	make -j16 -l16 install
 }
 
 build_orca() {
 	cd /build/orca
 	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
-	make -j36 -l16 install
+	make -j16 -l16 install
 }
 
 copy_output() {
