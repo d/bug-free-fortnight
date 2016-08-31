@@ -19,7 +19,9 @@ build_gpdb() {
 	prefix=$1
 
 	cd /build
-	git clone --shared /workspace/gpdb
+	if [[ ! -e /build/gpdb ]]; then
+		git clone --shared /workspace/gpdb
+	fi
 	cd gpdb
 	env \
 		CXX='ccache c++' \
@@ -29,10 +31,18 @@ build_gpdb() {
 	make -j$(nproc) install
 }
 
+default_python_home() {
+	python <<-EOF
+	import sys
+	print(sys.prefix)
+	EOF
+}
+
 make_cluster() {
 	local prefix
 	prefix=$1
-	set +u
+	: ${LD_LIBRARY_PATH:=}
+	: ${PYTHONHOME:=$(default_python_home)}
 	cd /build/gpdb/gpAux/gpdemo
 	source ${prefix}/greenplum_path.sh
 	make cluster
