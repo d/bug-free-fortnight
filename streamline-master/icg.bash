@@ -3,6 +3,10 @@
 set -e -o pipefail
 set -x
 
+_main() {
+	time icg
+}
+
 icg() {
 	source /build/install/greenplum_path.sh
 	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
@@ -11,4 +15,4 @@ icg() {
 	PGOPTIONS='-c optimizer=on' make installcheck-good
 }
 
-icg "$@"
+_main "$@"
