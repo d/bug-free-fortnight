@@ -29,6 +29,7 @@ _main() {
 	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
 	run_in_container ${container_id} ${path}
 
+	run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash
 }
 
 friendly_message() {

@@ -27,7 +27,7 @@ build_gpdb() {
 		CXX='ccache c++' \
 		CC='ccache cc' \
 		./configure --enable-orca --enable-mapreduce --with-perl --with-libxml --with-python --enable-gpfdist --prefix=${prefix} --with-includes=${prefix}/include --with-libs=${prefix}/lib
-	make -j$(nproc) install rhel5_x86_64_CXX='ccache c++'
+	make CXX='ccache c++' -j$(nproc) install
 
 }
 
