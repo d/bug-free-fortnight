@@ -25,10 +25,10 @@ build_gpdb() {
 	cd gpdb
 	env \
 		CXX='ccache c++' \
-		BLD_CXX='ccache c++' \
 		CC='ccache cc' \
 		./configure --enable-orca --enable-mapreduce --with-perl --with-libxml --with-python --enable-gpfdist --prefix=${prefix} --with-includes=${prefix}/include --with-libs=${prefix}/lib
-	make -j$(nproc) install
+	make -j$(nproc) install rhel5_x86_64_CXX='ccache c++'
+
 }
 
 default_python_home() {
