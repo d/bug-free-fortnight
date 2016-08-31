@@ -72,6 +72,10 @@ create_container() {
 		--volume orca:/orca:ro \
 		--volume ${workspace}:/workspace:ro \
 		--env CCACHE_DIR=/ccache \
+		--env IVYREPO_HOST="${IVYREPO_HOST}" \
+		--env IVYREPO_REALM="${IVYREPO_REALM}" \
+		--env IVYREPO_USER="${IVYREPO_USER}" \
+		--env IVYREPO_PASSWD="${IVYREPO_PASSWD}" \
 		${image_id}
 }
 
