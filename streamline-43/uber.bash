@@ -27,6 +27,8 @@ _main() {
 	make_sync_tools ${container_id} ${relpath}
 
 	build_gpdb4 ${container_id} ${relpath}
+
+	run_in_container ${container_id} /workspace/${relpath}/icg.bash
 }
 
 make_sync_tools() {
