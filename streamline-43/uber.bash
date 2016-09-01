@@ -13,14 +13,14 @@ _main() {
 	local image_id
 	readonly image_id=$(build_image)
 
-	build_orca
-
 	local container_id
-	readonly container_id=$(create_container ${image_id})
+	container_id=$(create_container ${image_id})
 
 	trap "cleanup ${container_id}" INT ERR
 
 	set_ccache_max_size
+
+	build_orca
 
 	local -r relpath=$(relpath_from_workspace)
 
