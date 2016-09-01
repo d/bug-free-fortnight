@@ -4,11 +4,13 @@ set -e -o pipefail
 set -x
 
 _main() {
+	USER="$(id -un)"
+	LOGNAME="${USER}"
+	export USER LOGNAME
 	time icg
 }
 
 icg() {
-	source /etc/profile
 	source /build/install/greenplum_path.sh
 	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
 	

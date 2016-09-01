@@ -4,7 +4,10 @@ set -e -u -o pipefail
 set -x
 
 _main() {
-	source /etc/profile
+	USER="$(id -un)"
+	LOGNAME="${USER}"
+	export USER LOGNAME
+
 	time icg
 	time bugbuster
 }
