@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e -u -o pipefail
+set -x
+
 _main() {
 	source /etc/profile
 	time icg
