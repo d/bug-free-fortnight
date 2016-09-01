@@ -63,7 +63,7 @@ create_container() {
 	image_id=$1
 	local workspace
 	readonly workspace=$(workspace)
-	docker run --detach -ti \
+	docker run --detach -i \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca:ro \
 		--volume ${workspace}:/workspace:ro \

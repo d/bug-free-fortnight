@@ -3,7 +3,7 @@ build_orca() {
 	local workspace
 	readonly workspace=$(workspace)
 
-	docker run --rm -ti \
+	docker run --rm \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca \
 		--volume ${workspace}:/workspace:ro \
