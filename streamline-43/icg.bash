@@ -1,6 +1,7 @@
 #!/bin/bash
 
 _main() {
+	source /etc/profile
 	time icg
 	time bugbuster
 }

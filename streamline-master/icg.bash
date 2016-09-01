@@ -8,11 +8,12 @@ _main() {
 }
 
 icg() {
+	source /etc/profile
 	source /build/install/greenplum_path.sh
 	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
 	
 	cd /build/gpdb
-	PGOPTIONS='-c optimizer=on' make installcheck-good
+	env PGOPTIONS='-c optimizer=on' make installcheck-good
 }
 
 _main "$@"
