@@ -22,3 +22,4 @@ RUN ssh-keygen -f ~/.ssh/id_rsa \
 	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
 
 CMD sudo service sshd start && /bin/bash -l
+ENV JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.39.x86_64
