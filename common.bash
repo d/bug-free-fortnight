@@ -39,12 +39,14 @@ build_image() {
 
 run_in_container() {
 	local container_id
-	local path
+	local -a path_and_args
 
-	container_id=$1
-	path=$2
+	readonly container_id=$1
+	shift
 
-	docker exec ${container_id} ${path}
+	path_and_args=("$@")
+
+	docker exec ${container_id} "${path_and_args[@]}"
 }
 
 workspace() {

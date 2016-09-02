@@ -34,7 +34,7 @@ _main() {
 	if [[ "$optimizer" = true ]]; then
 		run_in_container ${container_id} /workspace/${relpath}/icg.bash
 	else
-		run_in_container ${container_id} "/workspace/${relpath}/icg.bash --no-optimizer"
+		run_in_container ${container_id} /workspace/${relpath}/icg.bash --no-optimizer
 	fi
 }
 
@@ -56,7 +56,7 @@ build_gpdb4() {
 	readonly relpath=$2
 
 	local -r path=/workspace/${relpath}/build_gpdb4.bash
-	run_in_container ${container_id} "/bin/bash -i ${path}"
+	run_in_container ${container_id} ${path}
 }
 
 cleanup() {

@@ -35,7 +35,7 @@ _main() {
 	if [[ "$optimizer" = true ]]; then
 		run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash
 	else
-		run_in_container ${container_id} "/workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer"
+		run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
 	fi
 }
 
