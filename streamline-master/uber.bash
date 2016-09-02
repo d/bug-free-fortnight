@@ -24,7 +24,7 @@ _main() {
 	trap "cleanup ${container_id}" INT ERR
 
 	local container_name
-	readonly container_name="$(container_name ${container_id})"
+	container_name="$(container_name ${container_id})"
 	friendly_message ${container_name}
 
 	set_ccache_max_size
@@ -63,7 +63,7 @@ create_container() {
 	local image_id
 	image_id=$1
 	local workspace
-	readonly workspace=$(workspace)
+	workspace=$(workspace)
 	docker run --detach -i \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca:ro \

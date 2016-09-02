@@ -14,7 +14,7 @@ _main() {
 	parse_opts "$@"
 
 	local image_id
-	readonly image_id=$(build_image)
+	image_id=$(build_image)
 
 	local container_id
 	container_id=$(create_container ${image_id})

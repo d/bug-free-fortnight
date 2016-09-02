@@ -19,7 +19,7 @@ container_name() {
 
 build_orca() {
 	local workspace
-	readonly workspace=$(workspace)
+	workspace=$(workspace)
 
 	docker run --rm \
 		--volume gpdbccache:/ccache \
