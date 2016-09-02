@@ -18,7 +18,7 @@ _main() {
 	local image_id
 	image_id=$(build_image)
 
-	build_orca
+	time build_orca
 
 	local container_id
 	container_id=$(create_container ${image_id})

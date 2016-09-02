@@ -23,7 +23,7 @@ _main() {
 
 	set_ccache_max_size
 
-	build_orca
+	time build_orca
 
 	local -r relpath=$(relpath_from_workspace)
 
