@@ -1,6 +1,7 @@
 parse_opts() {
 	optimizer=true
 	interactive=false
+	stale_orca=false
 	local opt
 	for opt in "$@"; do
 		case "${opt}" in
@@ -9,6 +10,9 @@ parse_opts() {
 				;;
 			--interactive)
 				interactive=true
+				;;
+			--use-stale-orca)
+				stale_orca=true
 				;;
 		esac
 	done
@@ -27,6 +31,10 @@ container_name() {
 
 
 build_orca() {
+	if [[ "${stale_orca:-}" = true ]]; then
+		return 0
+	fi
+
 	local workspace
 	workspace=$(workspace)
 
