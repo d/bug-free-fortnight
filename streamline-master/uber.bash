@@ -11,6 +11,7 @@ _main() {
 	fi
 
 	local optimizer
+	local interactive
 	parse_opts "$@"
 
 	local image_id
@@ -23,29 +24,21 @@ _main() {
 
 	trap "cleanup ${container_id}" EXIT
 
-	local container_name
-	container_name="$(container_name ${container_id})"
-	friendly_message ${container_name}
-
 	set_ccache_max_size
 
 	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
 	run_in_container ${container_id} ${path}
+
+	if [[ "${interactive}" = true ]]; then
+		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash
+		return 0
+	fi
 
 	if [[ "$optimizer" = true ]]; then
 		run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash
 	else
 		run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
 	fi
-}
-
-friendly_message() {
-	local container_name
-	readonly container_name=$1
-
-	echo "Building Xerces, GPOS, ORCA, and GPDB"
-	echo "When it is done, run the following command to interact with the cluster, or run ICG:"
-	echo "docker exec -ti ${container_name} /workspace/bug-free-fortnight/streamline-master/db_shell.bash"
 }
 
 cleanup() {

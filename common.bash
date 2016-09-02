@@ -1,13 +1,22 @@
 parse_opts() {
 	optimizer=true
+	interactive=false
 	local opt
 	for opt in "$@"; do
 		case "${opt}" in
 			--planner|--no-optimizer)
 				optimizer=false
 				;;
+			--interactive)
+				interactive=true
+				;;
 		esac
 	done
+
+	if [[ "${interactive}" = true && "${optimizer}" = false ]]; then
+		printf >&2 -- '--interactive and --no-optimizer are mutually exclusive\n'
+		return 1
+	fi
 }
 
 container_name() {
