@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e -o pipefail
+set -e -u -o pipefail
 set -x
 
 source $(dirname $0)/../common.bash
