@@ -1,3 +1,15 @@
+parse_opts() {
+	optimizer=true
+	local opt
+	for opt in "$@"; do
+		case "${opt}" in
+			--planner|--no-optimizer)
+				optimizer=false
+				;;
+		esac
+	done
+}
+
 container_name() {
 	local container_id
 	readonly container_id=$1

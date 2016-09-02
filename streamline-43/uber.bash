@@ -10,6 +10,9 @@ _main() {
 		set -x
 	fi
 
+	local optimizer
+	parse_opts "$@"
+
 	local image_id
 	readonly image_id=$(build_image)
 
@@ -28,7 +31,11 @@ _main() {
 
 	build_gpdb4 ${container_id} ${relpath}
 
-	run_in_container ${container_id} /workspace/${relpath}/icg.bash
+	if [[ "$optimizer" = true ]]; then
+		run_in_container ${container_id} /workspace/${relpath}/icg.bash
+	else
+		run_in_container ${container_id} "/workspace/${relpath}/icg.bash --no-optimizer"
+	fi
 }
 
 make_sync_tools() {
