@@ -1,3 +1,9 @@
+container_name() {
+	local container_id
+	readonly container_id=$1
+	docker ps --format '{{.Names}}' --filter id=${container_id}
+}
+
 
 build_orca() {
 	local workspace

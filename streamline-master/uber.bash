@@ -41,12 +41,6 @@ friendly_message() {
 	echo "docker exec -ti ${container_name} /workspace/bug-free-fortnight/streamline-master/db_shell.bash"
 }
 
-container_name() {
-	local container_id
-	readonly container_id=$1
-	docker ps --format '{{.Names}}' --filter id=${container_id}
-}
-
 cleanup() {
 	local container_id
 	readonly container_id=$1
