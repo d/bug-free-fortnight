@@ -4,12 +4,9 @@ set -e -u -o pipefail
 set -x
 
 source $(dirname $0)/../common.bash
+source $(dirname $0)/guest_common.bash
 
 _main() {
-	USER="$(id -un)"
-	LOGNAME="${USER}"
-	export USER LOGNAME
-
 	local optimizer
 	parse_opts "$@"
 
@@ -20,13 +17,6 @@ _main() {
 		time icg_planner
 		time bugbuster_planner
 	fi
-}
-
-pollute_cluster_env() {
-	: ${LD_LIBRARY_PATH:=}
-	source /opt/gcc_env.sh
-	source /build/install/greenplum-db-devel/greenplum_path.sh
-	source /build/gpdb4/gpAux/gpdemo/gpdemo-env.sh
 }
 
 icg() {

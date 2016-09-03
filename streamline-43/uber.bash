@@ -31,6 +31,11 @@ _main() {
 
 	build_gpdb4 ${container_id} ${relpath}
 
+	if [[ "${interactive}" = true ]]; then
+		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-43/db_shell.bash
+		return 0
+	fi
+
 	if [[ "$optimizer" = true ]]; then
 		run_in_container ${container_id} /workspace/${relpath}/icg.bash
 	else
