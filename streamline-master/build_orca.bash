@@ -21,7 +21,7 @@ _main() {
 build_xerces() {
 	cd /build/xerces
 
-	env CXX='ccache c++' CC='ccache cc' /workspace/gp-xerces/configure --prefix ${xerces_prefix}
+	env CXX='ccache c++' CC='ccache gcc' /workspace/gp-xerces/configure --prefix ${xerces_prefix}
 	make -j16 -l16 install
 }
 
