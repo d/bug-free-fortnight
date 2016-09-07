@@ -1,5 +1,6 @@
 set -e -u -o pipefail
 
+# shellcheck source=streamline-master/guest_common.bash
 source guest_common.bash
 
 _main() {

@@ -26,7 +26,7 @@ parse_opts() {
 container_name() {
 	local container_id
 	readonly container_id=$1
-	docker ps --format '{{.Names}}' --filter id=${container_id}
+	docker ps --format '{{.Names}}' --filter id="${container_id}"
 }
 
 
@@ -41,7 +41,7 @@ build_orca() {
 	docker run --rm \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca \
-		--volume ${workspace}:/workspace:ro \
+		--volume "${workspace}":/workspace:ro \
 		--env CCACHE_DIR=/ccache \
 		--env CCACHE_UMASK=0000 \
 		yolo/orcadev:centos5 \
@@ -50,8 +50,8 @@ build_orca() {
 
 build_image() {
 	local dir
-	dir=$(dirname $0)
-	docker build -q ${dir}
+	dir=$(dirname "$0")
+	docker build -q "${dir}"
 }
 
 run_in_container() {
@@ -63,13 +63,13 @@ run_in_container() {
 
 	path_and_args=("$@")
 
-	docker exec ${container_id} "${path_and_args[@]}"
+	docker exec "${container_id}" "${path_and_args[@]}"
 }
 
 workspace() {
 	local -r whereami=$(absdir)
 
-	dirname $(dirname ${whereami})
+	dirname "$(dirname "${whereami}")"
 }
 
 absdir() {

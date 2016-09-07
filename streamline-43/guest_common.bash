@@ -3,9 +3,12 @@ pollute_cluster_env() {
 	LOGNAME="${USER}"
 	export USER LOGNAME
 
-	: ${LD_LIBRARY_PATH:=}
+	: "${LD_LIBRARY_PATH:=}"
+	# shellcheck disable=SC1091
 	source /opt/gcc_env.sh
+	# shellcheck disable=SC1091
 	source /build/install/greenplum-db-devel/greenplum_path.sh
+	# shellcheck disable=SC1091
 	source /build/gpdb4/gpAux/gpdemo/gpdemo-env.sh
 }
 

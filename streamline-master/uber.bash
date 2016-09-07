@@ -2,6 +2,7 @@
 
 set -u -e -o pipefail
 
+# shellcheck source=common.bash
 source $(dirname $0)/../common.bash
 
 _main() {
@@ -21,14 +22,14 @@ _main() {
 	time build_orca
 
 	local container_id
-	container_id=$(create_container ${image_id})
+	container_id=$(create_container "${image_id}")
 
 	trap "cleanup ${container_id}" EXIT
 
 	set_ccache_max_size
 
 	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
-	run_in_container ${container_id} ${path}
+	run_in_container "${container_id}" ${path}
 
 	if [[ "${interactive}" = true ]]; then
 		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash
@@ -36,9 +37,9 @@ _main() {
 	fi
 
 	if [[ "$optimizer" = true ]]; then
-		run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash
+		run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash
 	else
-		run_in_container ${container_id} /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
+		run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
 	fi
 }
 
@@ -49,8 +50,8 @@ cleanup() {
 	local workspace
 	workspace=$(workspace)
 
-	docker cp ${container_id}:/build/gpdb/src/test/regress/regression.diffs ${workspace}/gpdb/src/test/regress || :
-	docker rm --force ${container_id}
+	docker cp "${container_id}":/build/gpdb/src/test/regress/regression.diffs "${workspace}"/gpdb/src/test/regress || :
+	docker rm --force "${container_id}"
 }
 
 create_container() {
@@ -61,9 +62,9 @@ create_container() {
 	docker run --detach -ti \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca:ro \
-		--volume ${workspace}:/workspace:ro \
+		--volume "${workspace}":/workspace:ro \
 		--env CCACHE_DIR=/ccache \
-		${image_id}
+		"${image_id}"
 }
 
 _main "$@"

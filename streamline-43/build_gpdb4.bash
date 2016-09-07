@@ -14,18 +14,21 @@ inject_orca() {
 }
 
 build_gpdb4() {
-	: ${LD_LIBRARY_PATH:=}
+	: "${LD_LIBRARY_PATH:=}"
 	(
 	pushd /build/gpdb4/gpAux
+	# shellcheck disable=SC1091
 	source /opt/gcc_env.sh
+
 	env IVY_HOME=/opt/releng/ivy_home make BLD_CC='ccache gcc' rhel5_x86_64_CXX='ccache g++' GPROOT=/build/install PARALLEL_BUILD=1 dist
 	)
 }
 
 make_cluster() {
-	: ${LD_LIBRARY_PATH:=}
+	: "${LD_LIBRARY_PATH:=}"
 	(
 	pushd /build/gpdb4/gpAux
+	# shellcheck disable=SC1091
 	source /build/install/greenplum-db-devel/greenplum_path.sh
 	make -C /build/gpdb4/gpAux/gpdemo
 	)
