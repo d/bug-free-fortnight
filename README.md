@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/d/bug-free-fortnight.svg?branch=develop)](https://travis-ci.org/d/bug-free-fortnight)
+
 # Running tests for GPDB
 This repository is a simple on-ramp to help contributors run tests (`installcheck`) for GPDB
 
