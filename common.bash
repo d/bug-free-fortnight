@@ -38,7 +38,9 @@ build_orca() {
 	local workspace
 	workspace=$(workspace)
 
-	docker run --rm \
+	local orca_container_id
+	orca_container_id=$(
+	docker run --detach \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca \
 		--volume "${workspace}":/workspace:ro \
@@ -46,6 +48,14 @@ build_orca() {
 		--env CCACHE_UMASK=0000 \
 		yolo/orcadev:centos5 \
 		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
+	)
+	local -i orca_build_status
+	orca_build_status=$(docker wait "${orca_container_id}")
+	if [[ "${orca_build_status}" -ne 0 ]]; then
+		docker logs "${orca_container_id}"
+	fi
+	docker rm "${orca_container_id}"
+	return "${orca_build_status}"
 }
 
 build_image() {
