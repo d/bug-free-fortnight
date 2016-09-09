@@ -28,13 +28,13 @@ build_xerces() {
 build_gpos() {
 	cd /build/gpos
 	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gpos
-	make -j16 -l16 install
+	cmake --build . --target install -- -j16 -l16
 }
 
 build_orca() {
 	cd /build/orca
 	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
-	make -j16 -l16 install
+	cmake --build . --target install -- -j16 -l16
 }
 
 copy_output() {
