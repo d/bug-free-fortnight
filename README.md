@@ -25,6 +25,15 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
   Set the `DEBUG` environment variable to reinstate debug output, e.g.
   `env DEBUG=1 streamline-master/uber.bash`
 
+0. How do I set a GUC when running `installcheck`?
+
+  Run with the `--interactive` flag first, e.g.
+  ```
+  streamline-43/uber.bash --interactive
+  ```
+  It will stop after starting the cluster, and you can follow the prompt to set
+  any GUC before running `make installcheck`
+
 0. Shit don't work
 
   Please turn on debug output and attach the debug output when you ask for help
