@@ -20,7 +20,14 @@ build_gpdb4() {
 	# shellcheck disable=SC1091
 	source /opt/gcc_env.sh
 
-	env IVY_HOME=/opt/releng/ivy_home make BLD_CC='ccache gcc' rhel5_x86_64_CXX='ccache g++' GPROOT=/build/install PARALLEL_BUILD=1 dist
+	env IVY_HOME=/opt/releng/ivy_home \
+		make \
+		BLD_CC='ccache gcc' \
+		rhel5_x86_64_CXX='ccache g++' \
+		GPROOT=/build/install \
+		PARALLEL_BUILD=1 \
+		parallelexec_maxlimit=12 \
+		dist
 	)
 }
 
