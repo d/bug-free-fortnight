@@ -5,7 +5,9 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
 
 ## Prerequisites
 0. Hack on your code, commit them locally
-0. Assuming all your code repositories are checked out in the same directory locally (e.g. `~/workspace`). Specifically, the following repositories should be checked out locally (how else would you hack on them?)
+0. Assuming all your code repositories are checked out in the same directory
+   locally (e.g. `~/workspace`). Specifically, the following repositories
+   should be checked out locally (how else would you hack on them?)
   0. [gpos](https://github.com/greenplum-db/gpos)
   0. [orca](https://github.com/greenplum-db/gporca)
   0. [gp-xerces](https://github.com/greenplum-db/gp-xerces)
