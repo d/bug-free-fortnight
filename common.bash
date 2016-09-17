@@ -33,6 +33,9 @@ container_name() {
 	docker ps --format '{{.Names}}' --filter id="${container_id}"
 }
 
+is_anxious() {
+	[[ "${DEBUG+x}" = "x" && "${existential_angst:-}" = "true" ]]
+}
 
 build_orca() {
 	if [[ "${stale_orca:-}" = true ]]; then
@@ -65,7 +68,7 @@ build_orca() {
 build_image() {
 	local dir
 	dir=$(dirname "$0")
-	if [[ "${DEBUG+x}" = "x" && "${existential_angst:-}" = "true" ]]; then
+	if is_anxious; then
 		docker build "${dir}" >&2
 	fi
 	docker build -q "${dir}"
