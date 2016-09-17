@@ -12,6 +12,8 @@ _main() {
 	fi
 
 	local optimizer
+	local interactive
+	local stale_orca
 	parse_opts "$@"
 
 	local image_id
