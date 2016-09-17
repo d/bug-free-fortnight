@@ -2,6 +2,7 @@ parse_opts() {
 	optimizer=true
 	interactive=false
 	stale_orca=false
+	existential_angst=false
 	local opt
 	for opt in "$@"; do
 		case "${opt}" in
@@ -13,6 +14,9 @@ parse_opts() {
 				;;
 			--use-stale-orca)
 				stale_orca=true
+				;;
+			--existential-angst)
+				existential_angst=true
 				;;
 		esac
 	done
@@ -61,6 +65,9 @@ build_orca() {
 build_image() {
 	local dir
 	dir=$(dirname "$0")
+	if [[ "${DEBUG+x}" = "x" && "${existential_angst:-}" = "true" ]]; then
+		docker build "${dir}" >&2
+	fi
 	docker build -q "${dir}"
 }
 

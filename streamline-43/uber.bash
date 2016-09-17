@@ -14,6 +14,7 @@ _main() {
 	local optimizer
 	local interactive
 	local stale_orca
+	local existential_angst
 	parse_opts "$@"
 
 	local image_id
