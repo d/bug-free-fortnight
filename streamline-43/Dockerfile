@@ -18,7 +18,7 @@ RUN sudo chown -R gpadmin:gpadmin /build
 
 USER gpadmin
 
-RUN ssh-keygen -f ~/.ssh/id_rsa \
+RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
 
 CMD sudo service sshd start && /bin/bash -l
