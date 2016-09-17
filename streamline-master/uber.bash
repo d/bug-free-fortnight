@@ -20,14 +20,14 @@ _main() {
 	local image_id
 	image_id=$(build_image)
 
-	time build_orca
-
 	local container_id
 	container_id=$(create_container "${image_id}")
 
 	trap "cleanup ${container_id}" EXIT
 
 	set_ccache_max_size
+
+	time build_orca
 
 	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
 	run_in_container "${container_id}" ${path}
