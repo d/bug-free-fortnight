@@ -56,8 +56,11 @@ build_orca() {
 		yolo/orcadev:centos5 \
 		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
 	)
-	local -i orca_build_status
-	orca_build_status=$(docker wait "${orca_container_id}")
+	local orca_build_status
+	orca_build_status=$(
+	trap "docker rm --force ${orca_container_id}" INT
+	docker wait "${orca_container_id}"
+	)
 	if [[ "${orca_build_status}" -ne 0 ]]; then
 		docker logs "${orca_container_id}"
 	fi
