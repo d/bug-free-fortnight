@@ -56,16 +56,23 @@ build_orca() {
 		yolo/orcadev:centos5 \
 		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
 	)
-	local orca_build_status
-	orca_build_status=$(
-	trap "docker rm --force ${orca_container_id}" INT
-	docker wait "${orca_container_id}"
-	)
-	if [[ "${orca_build_status}" -ne 0 ]]; then
-		docker logs "${orca_container_id}"
+	if is_anxious; then
+		(
+		trap "docker rm --force ${orca_container_id}" INT
+		docker attach --sig-proxy=false "${orca_container_id}"
+		)
+	else
+		local orca_build_status
+		orca_build_status=$(
+		trap "docker rm --force ${orca_container_id}" INT
+		docker wait "${orca_container_id}"
+		)
+		if [[ "${orca_build_status}" -ne 0 ]]; then
+			docker logs "${orca_container_id}"
+		fi
+		docker rm "${orca_container_id}"
+		return "${orca_build_status}"
 	fi
-	docker rm "${orca_container_id}"
-	return "${orca_build_status}"
 }
 
 build_image() {
