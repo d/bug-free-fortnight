@@ -25,7 +25,16 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
 0. It's too quiet!
 
   Set the `DEBUG` environment variable to reinstate debug output, e.g.
-  `env DEBUG=1 streamline-master/uber.bash`
+  ```
+  env DEBUG=1 streamline-master/uber.bash
+  ```
+
+0. It's still too quiet!
+
+  ```
+  env DEBUG=1 streamline-master/uber.bash --existential-angst
+  ```
+  This will output all the log information, including building GPORCA, etc.
 
 0. How do I set a GUC when running `installcheck`?
 
