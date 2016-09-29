@@ -11,7 +11,9 @@ _main() {
 	time tar xf /orca/bin_orca.tar -C ${prefix}
 	time tar xf /orca/bin_xerces.tar -C ${prefix}
 	time build_gpdb ${prefix}
-	time make_cluster ${prefix}
+	# time make_cluster ${prefix}
+
+	sudo cp --preserve=mode /workspace/bug-free-fortnight/streamline-master/compose-master-entry-point.bash /
 }
 
 build_gpdb() {
@@ -22,13 +24,15 @@ build_gpdb() {
 	if [[ ! -e /build/gpdb ]]; then
 		git clone --shared /workspace/gpdb
 	fi
-	cd gpdb
+	pushd gpdb
 	env \
 		CXX='ccache c++' \
 		CC='ccache cc' \
 		./configure --enable-orca --enable-mapreduce --with-perl --with-libxml --with-python --enable-gpfdist --prefix="${prefix}" --with-includes="${prefix}"/include --with-libs="${prefix}"/lib
 	make CXX='ccache c++' -j"$(nproc)" install
 
+	popd
+	rm -r /build/gpdb
 }
 
 default_python_home() {

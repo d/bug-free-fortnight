@@ -31,17 +31,18 @@ _main() {
 
 	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
 	run_in_container "${container_id}" ${path}
+	docker commit "${container_id}" yolo/gpdb-compose
 
-	if [[ "${interactive}" = true ]]; then
-		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash
-		return 0
-	fi
+	# if [[ "${interactive}" = true ]]; then
+	# 	docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash
+	# 	return 0
+	# fi
 
-	if [[ "$optimizer" = true ]]; then
-		run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash
-	else
-		run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
-	fi
+	# if [[ "$optimizer" = true ]]; then
+	# 	run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash
+	# else
+	# 	run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
+	# fi
 }
 
 cleanup() {
