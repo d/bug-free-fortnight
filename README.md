@@ -36,6 +36,10 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
   It will stop after starting the cluster, and you can follow the prompt to set
   any GUC before running `make installcheck`
 
+0. Shit's *SLOW*
+
+  If you are using Docker for Mac, [don't](VMware_Fusion.md).
+
 0. Shit don't work
 
   Please turn on debug output and attach the debug output when you ask for help
