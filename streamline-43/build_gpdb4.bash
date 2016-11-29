@@ -2,6 +2,7 @@
 
 set -e -u -o pipefail
 set -x
+set -o posix
 
 _main() {
 	time inject_orca
@@ -34,7 +35,6 @@ build_gpdb4() {
 make_cluster() {
 	: "${LD_LIBRARY_PATH:=}"
 	(
-	pushd /build/gpdb4/gpAux
 	# shellcheck disable=SC1091
 	source /build/install/greenplum-db-devel/greenplum_path.sh
 	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb4/gpAux/gpdemo

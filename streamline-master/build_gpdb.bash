@@ -2,6 +2,7 @@
 
 set -u -e -o pipefail
 set -x
+set -o posix
 
 _main() {
 	local prefix
@@ -43,10 +44,11 @@ make_cluster() {
 	prefix=$1
 	: "${LD_LIBRARY_PATH:=}"
 	: "${PYTHONHOME:=$(default_python_home)}"
-	cd /build/gpdb/gpAux/gpdemo
+	(
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
-	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make cluster
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb/gpAux/gpdemo
+	)
 }
 
 _main "$@"
