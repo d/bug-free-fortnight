@@ -37,7 +37,7 @@ make_cluster() {
 	pushd /build/gpdb4/gpAux
 	# shellcheck disable=SC1091
 	source /build/install/greenplum-db-devel/greenplum_path.sh
-	make -C /build/gpdb4/gpAux/gpdemo
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb4/gpAux/gpdemo
 	)
 }
 

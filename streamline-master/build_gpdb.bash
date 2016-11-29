@@ -46,7 +46,7 @@ make_cluster() {
 	cd /build/gpdb/gpAux/gpdemo
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
-	make cluster
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make cluster
 }
 
 _main "$@"
