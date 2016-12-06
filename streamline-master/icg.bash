@@ -23,14 +23,14 @@ icg() {
 	pollute_cluster_env
 	
 	cd /build/gpdb
-	env PGOPTIONS='-c optimizer=on' make installcheck-good
+	env PGOPTIONS='-c optimizer=on' make -C src/test installcheck-good
 }
 
 icg_planner() {
 	pollute_cluster_env
 
 	cd /build/gpdb
-	make installcheck-good
+	make -C src/test installcheck-good
 }
 
 _main "$@"
