@@ -58,7 +58,7 @@ build_orca() {
 	)
 	if is_anxious; then
 		(
-		trap "docker rm --force ${orca_container_id}" INT
+		trap "docker rm --force ${orca_container_id}" EXIT
 		docker attach --sig-proxy=false "${orca_container_id}"
 		)
 	else
