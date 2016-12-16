@@ -11,13 +11,13 @@ _main() {
 }
 
 inject_orca() {
-	tar xf /orca/bin_orca.tar -C /build/gpdb4/gpAux/ext/rhel5_x86_64
+	tar xf /orca/bin_orca.tar -C /build/gpdb/gpAux/ext/rhel5_x86_64
 }
 
 build_gpdb4() {
 	: "${LD_LIBRARY_PATH:=}"
 	(
-	pushd /build/gpdb4/gpAux
+	pushd /build/gpdb/gpAux
 	# shellcheck disable=SC1091
 	source /opt/gcc_env.sh
 
@@ -37,7 +37,7 @@ make_cluster() {
 	(
 	# shellcheck disable=SC1091
 	source /build/install/greenplum-db-devel/greenplum_path.sh
-	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb4/gpAux/gpdemo
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb/gpAux/gpdemo
 	)
 }
 

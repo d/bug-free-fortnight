@@ -25,7 +25,7 @@ icg() {
 	(
 	pollute_cluster_env
 
-	cd /build/gpdb4/src/test/regress
+	cd /build/gpdb/src/test/regress
 	env PGOPTIONS='-c optimizer=on' make installcheck-good
 	)
 }
@@ -34,7 +34,7 @@ icg_planner() {
 	(
 	pollute_cluster_env
 
-	cd /build/gpdb4/src/test/regress
+	cd /build/gpdb/src/test/regress
 	make installcheck-good
 	)
 }
@@ -43,7 +43,7 @@ bugbuster_planner() {
 	(
 	pollute_cluster_env
 
-	cd /build/gpdb4/src/test/regress
+	cd /build/gpdb/src/test/regress
 	make installcheck-bugbuster
 	)
 }
@@ -52,7 +52,7 @@ bugbuster() {
 	(
 	pollute_cluster_env
 
-	cd /build/gpdb4/src/test/regress
+	cd /build/gpdb/src/test/regress
 	env PGOPTIONS='-c optimizer=on' make installcheck-bugbuster
 	)
 }

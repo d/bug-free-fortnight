@@ -6,7 +6,7 @@ source guest_common.bash
 _main() {
 	pollute_cluster_env
 	useful_prompt
-	cd /build/gpdb4/src/test/regress
+	cd /build/gpdb/src/test/regress
 	friendly_message
 	set +e
 }

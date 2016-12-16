@@ -23,7 +23,7 @@ _main() {
 	local container_id
 	container_id=$(create_container "${image_id}")
 
-	trap "cleanup ${container_id}" EXIT
+	trap "cleanup ${container_id} gpdb4" EXIT
 
 	set_ccache_max_size
 
@@ -31,7 +31,7 @@ _main() {
 
 	local -r relpath=$(relpath_from_workspace)
 
-	make_sync_tools "${container_id}" "${relpath}"
+	make_sync_tools "${container_id}" "${relpath}" gpdb4
 
 	build_gpdb4 "${container_id}" "${relpath}"
 
@@ -52,10 +52,12 @@ make_sync_tools() {
 	readonly container_id=$1
 	local relpath
 	readonly relpath=$2
+	local repo
+	readonly repo=$3
 
 	local -r path=/workspace/${relpath}/make_sync_tools.bash
 
-	run_in_container "${container_id}" "${path}"
+	run_in_container "${container_id}" "${path}" "${repo}"
 }
 
 build_gpdb4() {
@@ -71,11 +73,13 @@ build_gpdb4() {
 cleanup() {
 	local container_id
 	readonly container_id=$1
+	local repo
+	readonly repo=$2
 
 	local workspace
 	workspace=$(workspace)
 
-	docker cp "${container_id}":/build/gpdb4/src/test/regress/regression.diffs "${workspace}"/gpdb4/src/test/regress || :
+	docker cp "${container_id}":/build/gpdb/src/test/regress/regression.diffs "${workspace}"/"${repo}"/src/test/regress || :
 	docker rm --force "${container_id}"
 }
 

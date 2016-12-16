@@ -9,7 +9,7 @@ pollute_cluster_env() {
 	# shellcheck disable=SC1091
 	source /build/install/greenplum-db-devel/greenplum_path.sh
 	# shellcheck disable=SC1091
-	source /build/gpdb4/gpAux/gpdemo/gpdemo-env.sh
+	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
 }
 
 default_python_home() {
