@@ -31,6 +31,7 @@ build_gpdb4() {
 		make \
 		BLD_CC='ccache gcc' \
 		rhel5_x86_64_CXX='ccache g++' \
+		rhel6_x86_64_CXX='ccache g++' \
 		GPROOT=/build/install \
 		PARALLEL_BUILD=1 \
 		parallelexec_maxlimit=12 \
