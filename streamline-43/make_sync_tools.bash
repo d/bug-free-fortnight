@@ -4,6 +4,9 @@ set -e -u -o pipefail
 set -o posix
 set -x
 
+# shellcheck source=streamline-43/guest_common.bash
+source $(dirname $0)/guest_common.bash
+
 _main() {
 	local repo
 	repo=$1
@@ -18,7 +21,11 @@ make_sync_tools() {
 	source /opt/gcc_env.sh
 	pushd /build/gpdb/gpAux
 	make sync_tools
-	ln -svf /build/gpdb/gpAux/ext/rhel5_x86_64/python-2.6.2 /opt
+
+	local ext_dir
+	readonly ext_dir=$(ext_path)
+
+	ln -svf "${ext_dir}/python-2.6.2" /opt
 	)
 }
 

@@ -4,6 +4,9 @@ set -e -u -o pipefail
 set -x
 set -o posix
 
+# shellcheck source=streamline-43/guest_common.bash
+source $(dirname $0)/guest_common.bash
+
 _main() {
 	time inject_orca
 	time build_gpdb4
@@ -11,7 +14,10 @@ _main() {
 }
 
 inject_orca() {
-	tar xf /orca/bin_orca.tar -C /build/gpdb/gpAux/ext/rhel5_x86_64
+	local ext_dir
+	readonly ext_dir=$(ext_path)
+
+	tar xf /orca/bin_orca.tar -C "${ext_dir}"
 }
 
 build_gpdb4() {
