@@ -18,7 +18,6 @@ make_sync_tools() {
 	: "${LD_LIBRARY_PATH:=}"
 	(
 	# shellcheck disable=SC1091
-	source /opt/gcc_env.sh
 	pushd /build/gpdb/gpAux
 	make sync_tools
 
