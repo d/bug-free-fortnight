@@ -35,3 +35,11 @@ ext_path() {
 
 	echo "${ext_dirs[0]}"
 }
+
+ncpu() {
+	if nproc; then
+		true
+	else
+		echo 8
+	fi
+}

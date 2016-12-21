@@ -27,6 +27,8 @@ build_gpdb4() {
 	# shellcheck disable=SC1091
 	source /opt/gcc_env.sh
 
+	local max_load
+	max_load=$(( $(ncpu) * 3 / 2))
 	env IVY_HOME=/opt/releng/ivy_home \
 		make \
 		BLD_CC='ccache gcc' \
@@ -34,7 +36,7 @@ build_gpdb4() {
 		rhel6_x86_64_CXX='ccache g++' \
 		GPROOT=/build/install \
 		PARALLEL_BUILD=1 \
-		parallelexec_maxlimit=12 \
+		parallelexec_maxlimit=${max_load} \
 		dist
 	)
 }
