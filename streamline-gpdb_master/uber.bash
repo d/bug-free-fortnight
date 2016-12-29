@@ -54,19 +54,6 @@ gross_hack_to_remove_libz_until_we_pay_down_that_fucking_debt() {
 	docker exec "${container_id}" find /build/gpdb/gpAux/ext \( -name 'libz.so' -or -name 'libz.so.*' -or -name 'libz.a' \) -print -delete
 }
 
-cleanup() {
-	local container_id
-	readonly container_id=$1
-	local repo
-	readonly repo=$2
-
-	local workspace
-	workspace=$(workspace)
-
-	docker cp "${container_id}":/build/gpdb/src/test/regress/regression.diffs "${workspace}"/"${repo}"/src/test/regress || :
-	docker rm --force "${container_id}"
-}
-
 create_container() {
 	local image_id
 	image_id=$1

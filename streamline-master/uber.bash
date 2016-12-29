@@ -23,7 +23,7 @@ _main() {
 	local container_id
 	container_id=$(create_container "${image_id}")
 
-	trap "cleanup ${container_id}" EXIT
+	trap "cleanup ${container_id} gpdb" EXIT
 
 	set_ccache_max_size
 
@@ -46,17 +46,6 @@ _main() {
 
 build_gpdb() {
 	run_in_container "${container_id}" "${path}"
-}
-
-cleanup() {
-	local container_id
-	readonly container_id=$1
-
-	local workspace
-	workspace=$(workspace)
-
-	docker cp "${container_id}":/build/gpdb/src/test/regress/regression.diffs "${workspace}"/gpdb/src/test/regress || :
-	docker rm --force "${container_id}"
 }
 
 create_container() {
