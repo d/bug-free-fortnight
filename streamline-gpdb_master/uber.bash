@@ -15,6 +15,7 @@ _main() {
 	local interactive
 	local stale_orca
 	local existential_angst
+	local build_mode
 	parse_opts "$@"
 
 	local image_id
@@ -34,7 +35,7 @@ _main() {
 	make_sync_tools "${container_id}" "${relpath}" gpdb
 	gross_hack_to_remove_libz_until_we_pay_down_that_fucking_debt "${container_id}"
 
-	build_gpdb "${container_id}" "${relpath}"
+	build_gpdb "${container_id}" "${relpath}" "${build_mode}"
 
 	if [[ "${interactive}" = true ]]; then
 		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-43/db_shell.bash

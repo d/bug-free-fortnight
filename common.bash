@@ -3,6 +3,7 @@ parse_opts() {
 	interactive=false
 	stale_orca=false
 	existential_angst=false
+	build_mode=opt
 	local opt
 	for opt in "$@"; do
 		case "${opt}" in
@@ -17,6 +18,9 @@ parse_opts() {
 				;;
 			--existential-angst)
 				existential_angst=true
+				;;
+			--enable-debug)
+				build_mode=debug
 				;;
 		esac
 	done
@@ -153,9 +157,18 @@ build_gpdb() {
 	readonly container_id=$1
 	local relpath
 	readonly relpath=$2
+	local build_mode
+	readonly build_mode=$3
+
+	local -a build_args=()
+	if [[ "${build_mode}" == debug ]]; then
+		build_args=(
+		-d
+		)
+	fi
 
 	local -r path=/workspace/${relpath}/build_gpdb.bash
-	run_in_container "${container_id}" "${path}"
+	run_in_container "${container_id}" "${path}" "${build_args[@]+${build_args[@]}}"
 }
 
 cleanup() {

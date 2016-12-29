@@ -15,6 +15,7 @@ _main() {
 	local interactive
 	local stale_orca
 	local existential_angst
+	local build_mode
 	parse_opts "$@"
 
 	local image_id
@@ -31,7 +32,7 @@ _main() {
 
 	local -r relpath=$(relpath_from_workspace)
 
-	build_gpdb "${container_id}" "${relpath}"
+	build_gpdb "${container_id}" "${relpath}" "${build_mode}"
 
 	if [[ "${interactive}" = true ]]; then
 		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash

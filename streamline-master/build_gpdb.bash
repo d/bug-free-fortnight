@@ -8,11 +8,33 @@ _main() {
 	local prefix
 	prefix=/build/install
 
+	local build_mode
+	parse_args "$@"
+
 	mkdir -p ${prefix}
 	time tar xf /orca/bin_orca.tar -C ${prefix}
 	time tar xf /orca/bin_xerces.tar -C ${prefix}
 	time build_gpdb ${prefix}
 	time make_cluster ${prefix}
+}
+
+parse_args() {
+	local args=("$@")
+	build_mode=opt
+
+	local opt
+	local OPTIND
+	while getopts d opt "${args[@]+${args[@]}}" ; do
+		case "${opt}" in
+			d)
+				build_mode=debug
+				;;
+			*)
+				echo >&2 Unknown flag
+				return 1
+				;;
+		esac
+	done
 }
 
 build_gpdb() {
@@ -36,6 +58,16 @@ build_gpdb() {
 	--with-includes="${prefix}/include"
 	--with-libs="${prefix}/lib"
 	)
+
+	if [[ "${build_mode}" == debug ]]; then
+		CONFIGURE_ENV+=(
+		CFLAGS='-O0'
+		)
+		CONFIGURE_FLAGS+=(
+		--enable-debug
+		--enable-cassert
+		)
+	fi
 
 	build_gpdb_impl "${prefix}" CONFIGURE_ENV CONFIGURE_FLAGS
 }
