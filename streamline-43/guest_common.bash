@@ -39,6 +39,8 @@ ext_path() {
 ncpu() {
 	if nproc; then
 		true
+	elif getconf _NPROCESSORS_ONLN; then
+		true
 	else
 		echo 8
 	fi
