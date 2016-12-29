@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -u -e -o pipefail
+set -e -u -o pipefail
 
 # shellcheck source=common.bash
 source "$(dirname "$0")"/../common.bash

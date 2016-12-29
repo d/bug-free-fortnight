@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -u -e -o pipefail
+set -e -u -o pipefail
 set -x
 set -o posix
 
