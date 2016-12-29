@@ -184,3 +184,20 @@ cleanup() {
 	docker rm --force "${container_id}"
 }
 
+run() {
+	local container_id
+	readonly container_id=$1
+	local relpath
+	readonly relpath=$2
+
+	if [[ "${interactive}" = true ]]; then
+		docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
+		return 0
+	fi
+
+	if [[ "$optimizer" = true ]]; then
+		run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash
+	else
+		run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash --no-optimizer
+	fi
+}
