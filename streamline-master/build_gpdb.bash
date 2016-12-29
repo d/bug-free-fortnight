@@ -24,7 +24,7 @@ parse_args() {
 
 	local opt
 	local OPTIND
-	while getopts d opt "${args[@]+${args[@]}}" ; do
+	while getopts :d opt "${args[@]+${args[@]}}" ; do
 		case "${opt}" in
 			d)
 				build_mode=debug

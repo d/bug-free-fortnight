@@ -1,6 +1,6 @@
 parse_opts() {
-	optimizer=true
-	interactive=false
+	installcheck_mode=orca
+	run_mode=icg
 	stale_orca=false
 	existential_angst=false
 	build_mode=opt
@@ -8,10 +8,10 @@ parse_opts() {
 	for opt in "$@"; do
 		case "${opt}" in
 			--planner|--no-optimizer)
-				optimizer=false
+				installcheck_mode=planner
 				;;
 			--interactive)
-				interactive=true
+				run_mode=interactive
 				;;
 			--use-stale-orca)
 				stale_orca=true
@@ -25,7 +25,7 @@ parse_opts() {
 		esac
 	done
 
-	if [[ "${interactive}" = true && "${optimizer}" = false ]]; then
+	if [[ "${run_mode}" = interactive && "${installcheck_mode}" = planner ]]; then
 		printf >&2 -- '--interactive and --no-optimizer are mutually exclusive\n'
 		return 1
 	fi
@@ -189,15 +189,42 @@ run() {
 	readonly container_id=$1
 	local relpath
 	readonly relpath=$2
+	local run_mode
+	readonly run_mode=$3
+	local installcheck_mode
+	readonly installcheck_mode=$4
 
-	if [[ "${interactive}" = true ]]; then
-		docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
-		return 0
-	fi
+	case "${run_mode}" in
+		interactive)
+			docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
+			return 0
+			;;
+		icg)
+			icg "${container_id}" "${relpath}" "${installcheck_mode}"
+			;;
+		*)
+			return 1
+			;;
+	esac
+}
 
-	if [[ "$optimizer" = true ]]; then
-		run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash
-	else
-		run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash --no-optimizer
-	fi
+icg() {
+	local container_id
+	readonly container_id=$1
+	local relpath
+	readonly relpath=$2
+	local installcheck_mode
+	readonly installcheck_mode=$3
+
+	case "${installcheck_mode}" in
+		orca)
+			run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash
+			;;
+		planner)
+			run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash -m planner
+			;;
+		*)
+			return 1
+			;;
+	esac
 }

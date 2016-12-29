@@ -11,8 +11,8 @@ _main() {
 		set -x
 	fi
 
-	local optimizer
-	local interactive
+	local installcheck_mode
+	local run_mode
 	local stale_orca
 	local existential_angst
 	local build_mode
@@ -34,7 +34,7 @@ _main() {
 
 	build_gpdb "${container_id}" "${relpath}" "${build_mode}"
 
-	run "${container_id}" "${relpath}"
+	run "${container_id}" "${relpath}" "${run_mode}" "${installcheck_mode}"
 }
 
 create_container() {
