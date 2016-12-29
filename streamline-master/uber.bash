@@ -3,7 +3,7 @@
 set -u -e -o pipefail
 
 # shellcheck source=common.bash
-source $(dirname $0)/../common.bash
+source "$(dirname "$0")"/../common.bash
 
 _main() {
 	# testing for unset variable
