@@ -29,8 +29,9 @@ _main() {
 
 	time build_orca
 
-	local -r path=/workspace/bug-free-fortnight/streamline-master/build_gpdb.bash
-	build_gpdb
+	local -r relpath=$(relpath_from_workspace)
+
+	build_gpdb4 "${container_id}" "${relpath}"
 
 	if [[ "${interactive}" = true ]]; then
 		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash
@@ -42,10 +43,6 @@ _main() {
 	else
 		run_in_container "${container_id}" /workspace/bug-free-fortnight/streamline-master/icg.bash --no-optimizer
 	fi
-}
-
-build_gpdb() {
-	run_in_container "${container_id}" "${path}"
 }
 
 create_container() {
