@@ -33,7 +33,7 @@ _main() {
 
 	make_sync_tools "${container_id}" "${relpath}" gpdb4
 
-	build_gpdb4 "${container_id}" "${relpath}"
+	build_gpdb "${container_id}" "${relpath}"
 
 	if [[ "${interactive}" = true ]]; then
 		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-43/db_shell.bash

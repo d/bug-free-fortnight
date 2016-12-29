@@ -148,13 +148,13 @@ make_sync_tools() {
 	run_in_container "${container_id}" "${path}" "${repo}"
 }
 
-build_gpdb4() {
+build_gpdb() {
 	local container_id
 	readonly container_id=$1
 	local relpath
 	readonly relpath=$2
 
-	local -r path=/workspace/${relpath}/build_gpdb4.bash
+	local -r path=/workspace/${relpath}/build_gpdb.bash
 	run_in_container "${container_id}" "${path}"
 }
 

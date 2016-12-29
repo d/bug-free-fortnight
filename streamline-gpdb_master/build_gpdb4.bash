@@ -1,1 +1,0 @@
-../streamline-43/build_gpdb4.bash

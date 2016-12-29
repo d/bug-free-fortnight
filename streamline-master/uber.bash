@@ -31,7 +31,7 @@ _main() {
 
 	local -r relpath=$(relpath_from_workspace)
 
-	build_gpdb4 "${container_id}" "${relpath}"
+	build_gpdb "${container_id}" "${relpath}"
 
 	if [[ "${interactive}" = true ]]; then
 		docker exec -ti "${container_id}" /workspace/bug-free-fortnight/streamline-master/db_shell.bash
