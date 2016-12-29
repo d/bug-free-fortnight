@@ -47,29 +47,6 @@ _main() {
 	fi
 }
 
-make_sync_tools() {
-	local container_id
-	readonly container_id=$1
-	local relpath
-	readonly relpath=$2
-	local repo
-	readonly repo=$3
-
-	local -r path=/workspace/${relpath}/make_sync_tools.bash
-
-	run_in_container "${container_id}" "${path}" "${repo}"
-}
-
-build_gpdb4() {
-	local container_id
-	readonly container_id=$1
-	local relpath
-	readonly relpath=$2
-
-	local -r path=/workspace/${relpath}/build_gpdb4.bash
-	run_in_container "${container_id}" "${path}"
-}
-
 cleanup() {
 	local container_id
 	readonly container_id=$1
@@ -100,16 +77,6 @@ create_container() {
 		--env IVYREPO_USER="${IVYREPO_USER}" \
 		--env IVYREPO_PASSWD="${IVYREPO_PASSWD}" \
 		"${image_id}"
-}
-
-relpath_from_workspace() {
-	local whereami this_dir parent_abspath parent_dir
-
-	whereami=$(absdir)
-	this_dir=$(basename "${whereami}")
-	parent_abspath=$(dirname "${whereami}")
-	parent_dir=$(basename "${parent_abspath}")
-	echo "${parent_dir}"/"${this_dir}"
 }
 
 _main "$@"

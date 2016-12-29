@@ -54,29 +54,6 @@ gross_hack_to_remove_libz_until_we_pay_down_that_fucking_debt() {
 	docker exec "${container_id}" find /build/gpdb/gpAux/ext \( -name 'libz.so' -or -name 'libz.so.*' -or -name 'libz.a' \) -print -delete
 }
 
-make_sync_tools() {
-	local container_id
-	readonly container_id=$1
-	local relpath
-	readonly relpath=$2
-	local repo
-	readonly repo=$3
-
-	local -r path=/workspace/${relpath}/make_sync_tools.bash
-
-	run_in_container "${container_id}" "${path}" "${repo}"
-}
-
-build_gpdb4() {
-	local container_id
-	readonly container_id=$1
-	local relpath
-	readonly relpath=$2
-
-	local -r path=/workspace/${relpath}/build_gpdb4.bash
-	run_in_container "${container_id}" "${path}"
-}
-
 cleanup() {
 	local container_id
 	readonly container_id=$1
@@ -107,16 +84,6 @@ create_container() {
 		--env IVYREPO_USER="${IVYREPO_USER}" \
 		--env IVYREPO_PASSWD="${IVYREPO_PASSWD}" \
 		"${image_id}"
-}
-
-relpath_from_workspace() {
-	local whereami this_dir parent_abspath parent_dir
-
-	whereami=$(absdir)
-	this_dir=$(basename "${whereami}")
-	parent_abspath=$(dirname "${whereami}")
-	parent_dir=$(basename "${parent_abspath}")
-	echo "${parent_dir}"/"${this_dir}"
 }
 
 _main "$@"
