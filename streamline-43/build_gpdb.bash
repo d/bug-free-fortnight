@@ -8,9 +8,12 @@ set -o posix
 source $(dirname $0)/guest_common.bash
 
 _main() {
+	local prefix
+	prefix=/build/install
+
 	time inject_orca
-	time build_gpdb4
-	time make_cluster
+	time build_gpdb4 "${prefix}"
+	time make_cluster "${prefix}"
 }
 
 inject_orca() {
@@ -21,6 +24,9 @@ inject_orca() {
 }
 
 build_gpdb4() {
+	local prefix
+	prefix=$1
+
 	: "${LD_LIBRARY_PATH:=}"
 	(
 	pushd /build/gpdb/gpAux
@@ -31,6 +37,7 @@ build_gpdb4() {
 	max_load=$(( $(ncpu) * 3 / 2))
 	env IVY_HOME=/opt/releng/ivy_home \
 		make \
+		INSTLOC="${prefix}" \
 		BLD_CC='ccache gcc' \
 		rhel5_x86_64_CXX='ccache g++' \
 		rhel6_x86_64_CXX='ccache g++' \
@@ -42,10 +49,13 @@ build_gpdb4() {
 }
 
 make_cluster() {
+	local prefix
+	prefix=$1
 	: "${LD_LIBRARY_PATH:=}"
+
 	(
-	# shellcheck disable=SC1091
-	source /build/install/greenplum-db-devel/greenplum_path.sh
+	# shellcheck disable=SC1090
+	source "${prefix}"/greenplum_path.sh
 	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb/gpAux/gpdemo
 	)
 }
