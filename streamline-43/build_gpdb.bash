@@ -54,6 +54,7 @@ make_cluster() {
 	: "${LD_LIBRARY_PATH:=}"
 
 	(
+	set_user_env
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
 	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb/gpAux/gpdemo

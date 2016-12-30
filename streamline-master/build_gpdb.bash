@@ -4,6 +4,9 @@ set -e -u -o pipefail
 set -x
 set -o posix
 
+# shellcheck source=streamline-master/guest_common.bash
+source $(dirname $0)/guest_common.bash
+
 _main() {
 	local prefix
 	prefix=/build/install
@@ -107,6 +110,7 @@ make_cluster() {
 	: "${LD_LIBRARY_PATH:=}"
 	: "${PYTHONHOME:=$(default_python_home)}"
 	(
+	set_user_env
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
 	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off' make -C /build/gpdb/gpAux/gpdemo

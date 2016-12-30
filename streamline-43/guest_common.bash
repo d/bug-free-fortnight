@@ -1,7 +1,11 @@
-pollute_cluster_env() {
-	USER="$(id -un)"
-	LOGNAME="${USER}"
+set_user_env() {
+	: "${USER:="$(id -un)"}"
+	: "${LOGNAME:=${USER}}"
 	export USER LOGNAME
+}
+
+pollute_cluster_env() {
+	set_user_env
 
 	: "${LD_LIBRARY_PATH:=}"
 	# shellcheck disable=SC1091
