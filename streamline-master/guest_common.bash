@@ -1,9 +1,3 @@
-set_user_env() {
-	USER="$(id -un)"
-	LOGNAME="${USER}"
-	export USER LOGNAME
-}
-
 pollute_cluster_env() {
 	set_user_env
 
@@ -16,10 +10,4 @@ pollute_cluster_env() {
 	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
 }
 
-default_python_home() {
-	python <<-EOF
-	import sys
-	print(sys.prefix)
-	EOF
-}
 
