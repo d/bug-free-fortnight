@@ -11,11 +11,15 @@ _main() {
 	mkdir -p /build/{install,xerces,gpos,orca}
 
 	time build_xerces
-	time build_gpos
-	time build_orca
+	time build_fat_orca
 
 	local -r output=/orca
 	time copy_output
+}
+
+build_fat_orca() {
+	build_gpos
+	build_orca
 }
 
 build_xerces() {
