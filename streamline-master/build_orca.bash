@@ -18,8 +18,12 @@ _main() {
 }
 
 build_fat_orca() {
-	build_gpos
-	build_orca
+	if build_orca; then
+		true
+	else
+		build_gpos
+		build_orca
+	fi
 }
 
 build_xerces() {
