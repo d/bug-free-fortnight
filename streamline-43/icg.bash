@@ -3,6 +3,8 @@
 set -e -u -o pipefail
 set -x
 
+# shellcheck source=guest_common.bash
+source $(dirname $0)/../guest_common.bash
 # shellcheck source=streamline-43/guest_common.bash
 source $(dirname $0)/guest_common.bash
 
