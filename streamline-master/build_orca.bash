@@ -3,6 +3,9 @@
 set -e -u -o pipefail
 set -x
 
+# shellcheck source=guest_common.bash
+source $(dirname $0)/../guest_common.bash
+
 _main() {
 	local -r prefix=/build/install
 	local -r xerces_prefix=/build/install.xerces
@@ -10,6 +13,8 @@ _main() {
 	mkdir -p ${xerces_prefix}
 	mkdir -p /build/{install,xerces,gpos,orca}
 
+	local -i NPROC=$(( 3 * $(ncpu) / 2))
+	local -i MAX_LOAD=$(( 2 * $(ncpu) ))
 	time build_xerces
 	time build_fat_orca
 
@@ -30,19 +35,19 @@ build_xerces() {
 	cd /build/xerces
 
 	env CXX='ccache c++' CC='ccache gcc' /workspace/gp-xerces/configure --prefix ${xerces_prefix}
-	make -j16 -l16 install
+	make -j${NPROC} -l${MAX_LOAD} install
 }
 
 build_gpos() {
 	cd /build/gpos
 	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gpos
-	cmake --build . --target install -- -j16 -l16
+	cmake --build . --target install -- -j${NPROC} -l${MAX_LOAD}
 }
 
 build_orca() {
 	cd /build/orca
 	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
-	cmake --build . --target install -- -j16 -l16
+	cmake --build . --target install -- -j${NPROC} -l${MAX_LOAD}
 }
 
 copy_output() {
