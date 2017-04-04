@@ -16,6 +16,20 @@ _main() {
 	time make_sync_tools
 }
 
+# same caveat as ext_path, see guest_common.bash
+python_path() {
+	local ext_path
+	ext_path=$1
+
+	shopt -s nullglob
+
+	local python_paths=( ${ext_path}/python-* )
+
+	[[ "${#python_paths[@]}" -eq "1" ]]
+
+	echo "${python_paths[0]}"
+}
+
 make_sync_tools() {
 	: "${LD_LIBRARY_PATH:=}"
 	(
@@ -26,7 +40,7 @@ make_sync_tools() {
 	local ext_dir
 	readonly ext_dir=$(ext_path)
 
-	ln -svf "${ext_dir}/python-2.6.2" /opt
+	ln -svf "$(python_path "${ext_dir}")" /opt
 	)
 }
 
