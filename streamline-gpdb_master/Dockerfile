@@ -1,6 +1,6 @@
 FROM pivotaldata/centos-gpdb-dev:6-gcc6.2-llvm3.7
 
-RUN yum install -q -y ccache
+RUN yum install -q -y ccache rsync
 # backport the no-tty fix from RHEL7 to RHEL5
 RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
 
