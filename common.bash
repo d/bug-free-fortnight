@@ -22,6 +22,9 @@ parse_opts() {
 			--enable-debug)
 				build_mode=debug
 				;;
+			--remote)
+				remote=true
+				;;
 		esac
 	done
 
@@ -104,6 +107,28 @@ workspace() {
 	local -r whereami=$(absdir)
 
 	dirname "$(dirname "${whereami}")"
+}
+
+setup_remote() {
+	local repos
+	repos=(bug-free-fortnight gp-xerces gporca gpdb)
+	local ip
+	ip=$(docker-machine ip ${DOCKER_MACHINE_NAME})
+	local user
+	user=$(docker-machine ssh ${DOCKER_MACHINE_NAME} whoami)
+
+	docker-machine ssh ${DOCKER_MACHINE_NAME} bash -s $(workspace) ${repos[@]} < "$(dirname "$0")"/../setup_remote.bash
+
+	for repo in ${repos[@]}; do
+		local repopath
+		repopath="$(workspace)/$repo"
+
+		# -C     - Path of the git repository locally
+		# -f     - Replace the remote tree
+		# HEAD   - current branch locally
+		# master - make sure to update the tree remotely which is by default at master
+		GIT_SSH_COMMAND="ssh -i ${DOCKER_CERT_PATH}/id_rsa" git -C "$repopath" push "$user@$ip":"$repopath" -f HEAD:master
+	done
 }
 
 absdir() {
