@@ -1,5 +1,9 @@
 FROM kuien/centos511-java7-gpdb-dev-image
 
+# keep epel alive!
+RUN rm /etc/yum.repos.d/CentOS*.repo
+ADD CentOS-Vault.repo /etc/yum.repos.d
+
 RUN yum install -q -y ccache
 # backport the no-tty fix from RHEL7 to RHEL5
 RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
