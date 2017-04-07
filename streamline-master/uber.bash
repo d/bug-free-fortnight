@@ -18,6 +18,10 @@ _main() {
 	local build_mode
 	parse_opts "$@"
 
+	if [[ "$remote" ]]; then
+		setup_remote
+	fi
+
 	local image_id
 	image_id=$(build_image)
 

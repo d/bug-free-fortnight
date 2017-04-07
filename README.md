@@ -4,6 +4,9 @@
 This repository is a simple on-ramp to help contributors run tests (`installcheck`) for GPDB
 
 ## Prerequisites
+0. Prepare docker
+  0. [MWare on Mac OSX](VMware_Fusion.md).
+  0. [Remote VM on AWS](Remote_VM.md).
 0. Hack on your code, commit them locally
 0. Assuming all your code repositories are checked out in the same directory
    locally (e.g. `~/workspace`). Specifically, the following repositories
@@ -27,6 +30,14 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
   Set the `DEBUG` environment variable to reinstate debug output, e.g.
   `env DEBUG=1 streamline-master/uber.bash`
 
+0. I want to run on AWS. Can I?
+
+	Yes! Refer to [Remote VM on AWS](Remote_VM.md) on how to set it up. Add the
+	--remote flag when running uber.bash.
+  ```
+  streamline-43/uber.bash --remote
+  ```
+
 0. How do I set a GUC when running `installcheck`?
 
   Run with the `--interactive` flag first, e.g.
@@ -35,10 +46,6 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
   ```
   It will stop after starting the cluster, and you can follow the prompt to set
   any GUC before running `make installcheck`
-
-0. Shit's *SLOW*
-
-  If you are using Docker for Mac, [don't](VMware_Fusion.md).
 
 0. Shit don't work
 
