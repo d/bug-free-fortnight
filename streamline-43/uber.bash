@@ -16,6 +16,7 @@ _main() {
 	local stale_orca
 	local existential_angst
 	local build_mode
+	local vanilla_orca
 	parse_opts "$@"
 
 	local image_id

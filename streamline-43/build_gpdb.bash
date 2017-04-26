@@ -24,13 +24,17 @@ _main() {
 parse_args() {
 	local args=("$@")
 	build_mode=opt
+	vanilla_orca=false
 
 	local opt
 	local OPTIND
-	while getopts :d opt "${args[@]+${args[@]}}" ; do
+	while getopts :dJ opt "${args[@]+${args[@]}}" ; do
 		case "${opt}" in
 			d)
 				build_mode=debug
+				;;
+			J)
+				vanilla_orca=true
 				;;
 			*)
 				echo >&2 Unknown flag
@@ -42,6 +46,11 @@ parse_args() {
 
 inject_orca() {
 	local ext_dir
+
+	if [[ "${vanilla_orca:-}" = true ]]; then
+		return 0
+	fi
+
 	readonly ext_dir=$(ext_path)
 
 	tar xf /orca/bin_orca.tar -C "${ext_dir}"
