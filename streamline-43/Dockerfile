@@ -1,8 +1,4 @@
-FROM kuien/centos511-java7-gpdb-dev-image
-
-# keep epel alive!
-RUN rm /etc/yum.repos.d/CentOS*.repo
-ADD CentOS-Vault.repo /etc/yum.repos.d
+FROM pivotaldata/centos-gpdb-dev:5
 
 RUN yum install -q -y ccache
 # backport the no-tty fix from RHEL7 to RHEL5
@@ -26,4 +22,4 @@ RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
 
 CMD sudo service sshd start && /bin/bash -l
-ENV JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.39.x86_64
+ENV JAVA_HOME=/usr/lib/jvm/jre-openjdk
