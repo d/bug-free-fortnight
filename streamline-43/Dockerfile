@@ -5,7 +5,7 @@ RUN yum install -q -y ccache
 RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
 
 # generate server keys
-RUN service sshd start
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
 
 RUN useradd --password '$5$uitFy1zdHuG$f7NutSS0aAyl7EqqPBhKZOk4iKJzxFkGGYd8s2hERM8' --group adm gpadmin \
 	&& echo '%adm ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -21,5 +21,5 @@ USER gpadmin
 RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
 
-CMD sudo service sshd start && /bin/bash -l
+CMD sudo /usr/sbin/sshd -D
 ENV JAVA_HOME=/usr/lib/jvm/java-openjdk
