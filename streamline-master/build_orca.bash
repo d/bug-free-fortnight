@@ -11,6 +11,7 @@ _main() {
 	local -r xerces_prefix=/build/install.xerces
 
 	mkdir -p ${xerces_prefix}
+	mkdir -p /build/src
 	mkdir -p /build/{install,xerces,gpos,orca}
 
 	local -i NPROC=$(( 3 * $(ncpu) / 2))
@@ -32,21 +33,24 @@ build_fat_orca() {
 }
 
 build_xerces() {
+	git clone --shared /workspace/gp-xerces /build/src/gp-xerces
 	cd /build/xerces
 
-	env CXX='ccache c++' CC='ccache gcc' /workspace/gp-xerces/configure --prefix ${xerces_prefix}
+	env CXX='ccache c++' CC='ccache gcc' /build/src/gp-xerces/configure --prefix ${xerces_prefix}
 	make -j${NPROC} -l${MAX_LOAD} install
 }
 
 build_gpos() {
+	git clone --shared /workspace/gpos /build/src/gpos
 	cd /build/gpos
-	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gpos
+	cmake -DCMAKE_INSTALL_PREFIX=${prefix} /build/src/gpos
 	cmake --build . --target install -- -j${NPROC} -l${MAX_LOAD}
 }
 
 build_orca() {
+	git clone --shared /workspace/gporca /build/src/orca
 	cd /build/orca
-	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /workspace/gporca
+	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /build/src/orca
 	cmake --build . --target install -- -j${NPROC} -l${MAX_LOAD}
 }
 
