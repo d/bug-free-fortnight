@@ -48,6 +48,7 @@ build_gpdb() {
 
 	local -a CONFIGURE_ENV
 	CONFIGURE_ENV=(
+	LD_LIBRARY_PATH=/build/install/lib
 	CXX='ccache c++'
 	CC='ccache cc'
 	)
