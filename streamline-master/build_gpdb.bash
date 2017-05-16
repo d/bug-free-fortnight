@@ -84,14 +84,11 @@ build_gpdb_impl() {
 	local -r configure_env_var="$2[@]"
 	local -r configure_flags_var="$3[@]"
 
-	cd /build
-	if [[ ! -e /build/gpdb ]]; then
-		git clone --shared /workspace/gpdb
-	fi
+	clone_gpdb gpdb
 	local -ra CONFIGURE_ENV=("${!configure_env_var}")
 	local -ra CONFIGURE_FLAGS=("${!configure_flags_var}")
 
-	cd gpdb
+	cd /build/gpdb
 	env \
 		"${CONFIGURE_ENV[@]}" \
 		./configure \

@@ -38,3 +38,17 @@ ncpu() {
 	fi
 }
 
+clone_gpdb() {
+	local repo
+	repo=$1
+
+	if [[ ! -e /build/gpdb ]]; then
+		git clone --shared "/workspace/${repo}" /build/gpdb
+	fi
+	(
+	pushd /build/gpdb
+	rsync -r "/workspace/${repo}/.git/modules" .git
+	git submodule update --init --recursive
+	)
+}
+
