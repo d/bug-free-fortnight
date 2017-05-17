@@ -13,6 +13,7 @@ _main() {
 	local repo
 	repo=$1
 	time clone_gpdb "${repo}"
+	time giant_hack_because_of_uid_min_difference
 	time make_sync_tools
 }
 
@@ -28,6 +29,10 @@ python_path() {
 	[[ "${#python_paths[@]}" -eq "1" ]]
 
 	echo "${python_paths[0]}"
+}
+
+giant_hack_because_of_uid_min_difference() {
+	sudo chmod -R o+rw /opt/releng
 }
 
 make_sync_tools() {
