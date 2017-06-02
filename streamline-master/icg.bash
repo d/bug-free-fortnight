@@ -12,11 +12,17 @@ _main() {
 	local installcheck_mode
 	parse_args "$@"
 
-	if [[ "${installcheck_mode}" = orca ]]; then
-		time icg
-	else
-		time icg_planner
-	fi
+	case "${installcheck_mode}" in
+		orca)
+			time icg::orca
+			;;
+		planner)
+			time icg::planner
+			;;
+		*)
+			false
+			;;
+	esac
 }
 
 parse_args() {
@@ -38,18 +44,21 @@ parse_args() {
 	done
 }
 
-icg() {
-	pollute_cluster_env
-	
-	cd /build/gpdb
-	env PGOPTIONS='-c optimizer=on' make -C src/test installcheck-good
+icg::orca() {
+	icg '-c optimizer=on'
 }
 
-icg_planner() {
+icg::planner() {
+	icg '-c optimizer=off'
+}
+
+icg() {
+	local pgoptions=$1
+
 	pollute_cluster_env
 
 	cd /build/gpdb
-	make -C src/test installcheck-good
+	env "PGOPTIONS=$pgoptions" make -C src/test installcheck-good
 }
 
 _main "$@"
