@@ -59,6 +59,7 @@ build_gpdb() {
 	--with-perl
 	--with-libxml
 	--with-python
+	--disable-gpcloud
 	--enable-gpfdist
 	--prefix="${prefix}"
 	--with-includes="${prefix}/include"
