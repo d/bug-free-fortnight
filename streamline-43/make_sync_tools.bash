@@ -12,7 +12,7 @@ source $(dirname $0)/guest_common.bash
 _main() {
 	local repo
 	repo=$1
-	time clone_gpdb "${repo}"
+	time clone_gpdb_with_submodules "${repo}"
 	time giant_hack_because_of_uid_min_difference
 	time make_sync_tools
 }

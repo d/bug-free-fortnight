@@ -45,10 +45,16 @@ clone_gpdb() {
 	if [[ ! -e /build/gpdb ]]; then
 		git clone --shared "/workspace/${repo}" /build/gpdb
 	fi
+}
+
+clone_gpdb_with_submodules() {
+	local repo
+	repo=$1
+
+	clone_gpdb "$1"
 	(
 	pushd /build/gpdb
 	rsync -r "/workspace/${repo}/.git/modules" .git
 	git submodule update --init --recursive
 	)
 }
-
