@@ -68,7 +68,7 @@ build_gpdb() {
 
 	if [[ "${build_mode}" == debug ]]; then
 		CONFIGURE_ENV+=(
-		CFLAGS='-O0'
+		CFLAGS='-O1 -fno-omit-frame-pointer'
 		)
 		CONFIGURE_FLAGS+=(
 		--enable-debug
