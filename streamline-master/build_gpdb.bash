@@ -60,6 +60,7 @@ build_gpdb() {
 	--with-libxml
 	--with-python
 	--disable-gpcloud
+	--disable-pxf
 	--enable-gpfdist
 	--prefix="${prefix}"
 	--with-includes="${prefix}/include"
