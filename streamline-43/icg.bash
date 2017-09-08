@@ -54,7 +54,7 @@ icg_planner() {
 	pollute_cluster_env
 
 	cd /build/gpdb/src/test/regress
-	make installcheck-good
+	env PGOPTIONS='-c optimizer=off' make installcheck-good
 	)
 }
 
