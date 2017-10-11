@@ -49,9 +49,8 @@ build_gpos() {
 
 build_orca() {
 	git clone --shared /workspace/gporca /build/src/orca
-	cd /build/orca
-	cmake -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} /build/src/orca
-	cmake --build . --target install -- -j${NPROC} -l${MAX_LOAD}
+	cmake -GNinja -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} -H/build/src/orca -B/build/orca
+	cmake --build /build/orca --target install -- -j${NPROC} -l${MAX_LOAD}
 }
 
 copy_output() {
