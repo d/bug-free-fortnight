@@ -48,9 +48,9 @@ build_gpdb() {
 
 	local -a CONFIGURE_ENV
 	CONFIGURE_ENV=(
-	LD_LIBRARY_PATH=/build/install/lib
-	CXX='ccache c++'
-	CC='ccache cc'
+	'LD_LIBRARY_PATH=/build/install/lib'
+	'CXX=ccache c++'
+	'CC=ccache cc'
 	)
 
 	local -a CONFIGURE_FLAGS=(
@@ -62,14 +62,14 @@ build_gpdb() {
 	--disable-gpcloud
 	--disable-pxf
 	--enable-gpfdist
-	--prefix="${prefix}"
-	--with-includes="${prefix}/include"
-	--with-libs="${prefix}/lib"
+	"--prefix=${prefix}"
+	"--with-includes=${prefix}/include"
+	"--with-libs=${prefix}/lib"
 	)
 
 	if [[ "${build_mode}" == debug ]]; then
 		CONFIGURE_ENV+=(
-		CFLAGS='-O1 -fno-omit-frame-pointer'
+		'CFLAGS=-O1 -fno-omit-frame-pointer'
 		)
 		CONFIGURE_FLAGS+=(
 		--enable-debug

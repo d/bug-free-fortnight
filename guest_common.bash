@@ -20,7 +20,7 @@ ext_path() {
 	local ext_dirs=( /build/gpdb/gpAux/ext/* )
 
 	# guard against empty
-	[[ "${ext_dirs[@]+x}" == "x" ]]
+	[[ "${ext_dirs[*]+x}" == "x" ]]
 
 	# guard against multiple subdirs
 	[[ "${#ext_dirs[@]}" -eq "1" ]]
