@@ -1,13 +1,51 @@
-FROM yolo/gpdbdev:centos6
+FROM ubuntu
+RUN apt-get update -q
+RUN apt-get install -y \
+	openssh-server \
+	iputils-ping \
+	net-tools \
+	python-pip \
+	gdb \
+	g++ \
+	make \
+	cmake \
+	bison \
+	flex \
+	ccache \
+	ninja-build \
+	libapr1-dev \
+	libevent-dev \
+	libxml2-dev \
+	libbz2-dev \
+	libssl-dev \
+	zlib1g-dev \
+	python-dev \
+	libyaml-dev \
+	libperl-dev \
+	libreadline-dev \
+	libcurl4-gnutls-dev \
+	locales \
+	bzip2 \
+	xz-utils \
+	runit \
+	byobu \
+	git \
+	rsync \
+	patch \
+	vim \
+	wget \
+	gnupg \
+	command-not-found \
+	sudo
 
-# backport the no-tty fix from RHEL7 to RHEL5
-RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
+RUN locale-gen en_US.UTF-8
 
-# generate server keys
-RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+RUN mkdir /var/run/sshd
 
-RUN useradd --password '$5$uitFy1zdHuG$f7NutSS0aAyl7EqqPBhKZOk4iKJzxFkGGYd8s2hERM8' --group adm gpadmin \
-	&& echo '%adm ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN adduser gpadmin
+# enable sudo for gpadmin
+RUN adduser gpadmin adm
+RUN echo '%adm ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/adm_no_passwd
 
 RUN chmod g+w -R /opt \
 	&& chgrp -R adm /opt
@@ -18,6 +56,14 @@ RUN chown -R gpadmin:gpadmin /build
 USER gpadmin
 
 RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
-	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
+	&& cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+
+RUN pip install --user \
+	psutil \
+	lockfile \
+	paramiko \
+	epydoc
+
+ENV PAGER=less
 
 CMD sudo /usr/sbin/sshd -D

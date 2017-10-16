@@ -88,14 +88,12 @@ build_gpdb_impl() {
 	local -r configure_flags_var="$3[@]"
 
 	clone_gpdb gpdb
-	local -ra CONFIGURE_ENV=("${!configure_env_var}")
-	local -ra CONFIGURE_FLAGS=("${!configure_flags_var}")
 
 	cd /build/gpdb
 	env \
-		"${CONFIGURE_ENV[@]}" \
+		"${!configure_env_var}" \
 		./configure \
-		"${CONFIGURE_FLAGS[@]}"
+		"${!configure_flags_var}"
 	make CXX='ccache c++' -j"$(nproc)" install
 
 }
