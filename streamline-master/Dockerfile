@@ -1,7 +1,8 @@
 FROM ubuntu
 RUN apt-get update -q
-RUN apt-get install -y \
+RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	openssh-server \
+	krb5-kdc \
 	iputils-ping \
 	net-tools \
 	python-pip \
@@ -24,6 +25,7 @@ RUN apt-get install -y \
 	libperl-dev \
 	libreadline-dev \
 	libcurl4-gnutls-dev \
+	libkrb5-dev \
 	locales \
 	bzip2 \
 	xz-utils \
