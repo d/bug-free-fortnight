@@ -55,6 +55,7 @@ build_gpdb() {
 
 	local -a CONFIGURE_FLAGS=(
 	--enable-orca
+	--with-gssapi
 	--enable-mapreduce
 	--with-perl
 	--with-libxml
