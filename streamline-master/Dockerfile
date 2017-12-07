@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:zesty
 RUN apt-get update -q
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	openssh-server \
@@ -38,9 +38,18 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	wget \
 	gnupg \
 	command-not-found \
+	unzip \
+	pigz \
+	iproute2 \
 	sudo
 
 RUN locale-gen en_US.UTF-8
+
+RUN pip install \
+	psutil \
+	lockfile \
+	paramiko \
+	epydoc
 
 RUN mkdir /var/run/sshd
 
@@ -59,12 +68,6 @@ USER gpadmin
 
 RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 	&& cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
-
-RUN pip install --user \
-	psutil \
-	lockfile \
-	paramiko \
-	epydoc
 
 ENV PAGER=less
 
