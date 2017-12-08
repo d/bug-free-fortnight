@@ -21,9 +21,13 @@ friendly_message() {
 	cat <<-EOF
 1. To run installcheck-good with orca, type:
   env PGOPTIONS='-c optimizer=on' make installcheck-good
-2. To create a database, type:
+2. To run installcheck-good with planner, type:
+  env PGOPTIONS='-c optimizer=off' make installcheck-good
+3. If you made new commits on the host -- without catalog changes -- this might make your iterations faster:
+  git fetch origin HEAD && git reset --hard FETCH_HEAD && make install -s -j8 -l12 -C /build/gpdb && gpstop -ari
+4. To create a database, type:
   createdb
-3. To run SQL, type:
+5. To run SQL, type:
   psql
 	EOF
 }
