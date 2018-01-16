@@ -25,9 +25,12 @@ python_path() {
 	shopt -s nullglob
 
 	local -a python_paths
-	read -r -a python_paths <<<"${ext_path}"/python-*
+	# this would have been much easier to read if we could pipe the subshell
+	# but there appears to be a Bash 3.2 bug where `read` does read
+	# anything when placed after a pipe like foo | read A
+	read -r -a python_paths <<<"$(find "${ext_path}" -maxdepth 1 -name 'python-*')"
 
-	[[ "${#python_paths[@]}" -eq "1" ]]
+	[[ "${#python_paths[@]}" -eq "1" ]] || return 1
 
 	echo "${python_paths[0]}"
 }
@@ -43,10 +46,13 @@ make_sync_tools() {
 	pushd /build/gpdb/gpAux
 	make sync_tools
 
+	set -e
 	local ext_dir
 	readonly ext_dir=$(ext_path)
+	local python_path
+	readonly python_path=$(python_path "${ext_dir}")
 
-	ln -svf "$(python_path "${ext_dir}")" /opt
+	ln -svf "${python_path}" /opt
 	)
 }
 
