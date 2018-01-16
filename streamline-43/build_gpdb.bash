@@ -90,7 +90,7 @@ build_gpdb4() {
 	'GPDBGOPT=on'
 	)
 	env IVY_HOME=/opt/releng/ivy_home \
-		make \
+		make -s \
 		"${MAKEVARS[@]}" \
 		"${target}"
 	)

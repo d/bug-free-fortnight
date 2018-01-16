@@ -94,7 +94,7 @@ build_gpdb_impl() {
 		"${!configure_env_var}" \
 		./configure \
 		"${!configure_flags_var}"
-	make CXX='ccache c++' -j"$(nproc)" install --output-sync=target
+	make CXX='ccache c++' -s -j"$(nproc)" install --output-sync=target
 
 }
 
