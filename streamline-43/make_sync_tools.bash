@@ -24,7 +24,8 @@ python_path() {
 
 	shopt -s nullglob
 
-	local python_paths=( ${ext_path}/python-* )
+	local -a python_paths
+	read -r -a python_paths <<<"${ext_path}"/python-*
 
 	[[ "${#python_paths[@]}" -eq "1" ]]
 
