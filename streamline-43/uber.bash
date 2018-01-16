@@ -46,6 +46,7 @@ create_container() {
 	local workspace
 	workspace=$(workspace)
 	docker run --detach -ti \
+		--init \
 		--cap-add SYS_PTRACE \
 		--volume gpdbccache:/ccache \
 		--volume gpdb4releng:/opt/releng \
