@@ -9,3 +9,4 @@ addons:
 
 script:
   - ./test.bash
+  - docker build streamline-master
