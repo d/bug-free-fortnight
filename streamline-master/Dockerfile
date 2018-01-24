@@ -1,4 +1,4 @@
-FROM ubuntu:zesty
+FROM ubuntu:rolling AS base
 RUN apt-get update -q
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	openssh-server \
@@ -70,5 +70,11 @@ RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 	&& cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
 
 ENV PAGER=less
+
+FROM base AS test
+COPY test.bash /
+RUN /test.bash
+
+FROM base
 
 CMD sudo /usr/sbin/sshd -D
