@@ -20,6 +20,7 @@ _main() {
 	time tar xf /orca/bin_orca.tar -C ${prefix}
 	time tar xf /orca/bin_xerces.tar -C ${prefix}
 	time build_gpdb ${prefix}
+	time unittest
 	time make_cluster ${prefix}
 }
 
@@ -41,6 +42,11 @@ parse_args() {
 		esac
 	done
 }
+
+unittest() {
+	make -s -j8 -C /build/gpdb/src/backend unittest-check
+}
+
 
 build_gpdb() {
 	local prefix

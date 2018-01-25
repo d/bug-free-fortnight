@@ -18,6 +18,7 @@ _main() {
 
 	time inject_orca
 	time build_gpdb4 "${prefix}"
+	time unittest
 	time make_cluster "${prefix}"
 }
 
@@ -54,6 +55,19 @@ inject_orca() {
 	readonly ext_dir=$(ext_path)
 
 	tar xf /orca/bin_orca.tar -C "${ext_dir}"
+}
+
+unittest() {
+	: "${LD_LIBRARY_PATH:=}"
+	(
+	# shellcheck disable=SC1091
+	source /opt/gcc_env.sh
+
+	# shellcheck disable=SC1090
+	source "${prefix}"/greenplum_path.sh
+
+	make -s -j8 -C /build/gpdb/src/backend unittest-check
+	)
 }
 
 build_gpdb4() {
