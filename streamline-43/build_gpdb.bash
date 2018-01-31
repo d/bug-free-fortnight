@@ -100,7 +100,7 @@ build_gpdb4() {
 	'GPROOT=/build/install'
 	'PARALLEL_BUILD=1'
 	"parallelexec_maxlimit=${max_load}"
-	"PARALLEL_MAKE_OPTS=-j${max_load} -l${max_load} --output-sync=target"
+	"PARALLEL_MAKE_OPTS=-j${max_load} -l${max_load}"
 	'GPDBGOPT=on'
 	)
 	env IVY_HOME=/opt/releng/ivy_home \
