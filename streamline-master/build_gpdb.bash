@@ -69,6 +69,7 @@ build_gpdb() {
 	--disable-gpcloud
 	--disable-pxf
 	--enable-gpfdist
+	--enable-debug
 	"--prefix=${prefix}"
 	"--with-includes=${prefix}/include"
 	"--with-libs=${prefix}/lib"
@@ -79,7 +80,6 @@ build_gpdb() {
 		'CFLAGS=-O1 -fno-omit-frame-pointer'
 		)
 		CONFIGURE_FLAGS+=(
-		--enable-debug
 		--enable-cassert
 		)
 	fi
