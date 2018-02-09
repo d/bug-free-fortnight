@@ -18,6 +18,14 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
 
 ## FAQ
 
+1. Where's my container?
+
+   We label the images and hence the containers. Try filtering like this:
+
+   ```
+   docker ps --filter label=io.github.d.uber-script
+   ```
+
 1. It's too noisy!
 
    We've fixed that by turning off most of the diagnostic output from Bash

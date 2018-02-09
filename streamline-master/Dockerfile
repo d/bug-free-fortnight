@@ -77,4 +77,5 @@ RUN /test.bash
 
 FROM base
 
+LABEL io.github.d.uber-script="oss"
 CMD sudo /usr/sbin/sshd -D

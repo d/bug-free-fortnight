@@ -22,4 +22,5 @@ RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 	&& cp ~/.ssh/{id_rsa.pub,authorized_keys}
 
 CMD sudo /usr/sbin/sshd -D
+LABEL io.github.d.uber-script="4.3"
 ENV JAVA_HOME=/usr/lib/jvm/java-openjdk
