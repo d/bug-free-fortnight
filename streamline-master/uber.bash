@@ -45,6 +45,7 @@ create_container() {
 	docker run --detach -ti \
 		--init \
 		--cap-add SYS_PTRACE \
+		--volume /build \
 		--volume gpdbccache:/ccache \
 		--volume orca:/orca:ro \
 		--volume "${workspace}":/workspace:ro \

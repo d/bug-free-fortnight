@@ -194,7 +194,7 @@ cleanup() {
 	workspace=$(workspace)
 
 	docker cp "${container_id}":/build/gpdb/src/test/regress/regression.diffs "${workspace}"/"${repo}"/src/test/regress || :
-	docker rm --force "${container_id}"
+	docker rm --force --volumes "${container_id}"
 }
 
 run() {

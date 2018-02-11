@@ -48,6 +48,7 @@ create_container() {
 	docker run --detach -ti \
 		--init \
 		--cap-add SYS_PTRACE \
+		--volume /build \
 		--volume gpdbccache:/ccache \
 		--volume gpdb4releng:/opt/releng \
 		--volume orca:/orca:ro \
