@@ -29,9 +29,9 @@ ext_path() {
 }
 
 ncpu() {
-	if nproc; then
-		true
-	elif getconf _NPROCESSORS_ONLN; then
+	# you'd think nproc is the way to go
+	# but getconf is more portable, given that we run in CentOS 5...
+	if getconf _NPROCESSORS_ONLN; then
 		true
 	else
 		echo 8
