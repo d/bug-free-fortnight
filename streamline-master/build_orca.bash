@@ -33,10 +33,12 @@ build_fat_orca() {
 }
 
 build_xerces() {
-	git clone --shared /workspace/gp-xerces /build/src/gp-xerces
+	local -r host_src=/workspace/gp-xerces
+	local -r src=/build/src/gp-xerces
+	git clone --shared ${host_src} ${src}
 	cd /build/xerces
 
-	env CXX='ccache c++' CC='ccache gcc' /build/src/gp-xerces/configure --prefix ${xerces_prefix}
+	env CXX='ccache c++' CC='ccache gcc' ${src}/configure --prefix ${xerces_prefix}
 	make -j${NPROC} -l${MAX_LOAD} install
 }
 
@@ -48,9 +50,12 @@ build_gpos() {
 }
 
 build_orca() {
-	git clone --shared /workspace/gporca /build/src/orca
-	cmake -GNinja -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} -H/build/src/orca -B/build/orca
-	cmake --build /build/orca --target install -- -j${NPROC} -l${MAX_LOAD}
+	local -r host_src=/workspace/gporca
+	local -r src=/build/src/orca
+	local -r build=/build/orca
+	git clone --shared ${host_src} ${src}
+	cmake -GNinja -DCMAKE_PREFIX_PATH=${xerces_prefix} -DCMAKE_INSTALL_PREFIX=${prefix} -H${src} -B${build}
+	cmake --build ${build} --target install -- -j${NPROC} -l${MAX_LOAD}
 }
 
 copy_output() {
