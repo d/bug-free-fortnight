@@ -120,7 +120,9 @@ make_cluster() {
 	set_user_env
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
-	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo
+	# FIXME: 5X_STABLE really should set this in their "make cluster"
+	# without this DEFAULT_QD_MAX_CONNECT=150 at least two tests would fail in ICG
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' DEFAULT_QD_MAX_CONNECT=150 make -C /build/gpdb/gpAux/gpdemo
 	)
 }
 
