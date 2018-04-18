@@ -16,7 +16,7 @@ _main() {
 
 	it_has_modern_ccache
 
-	it_has_ninja_17
+	it_has_ninja_17_plus
 
 	it_has_executables
 
@@ -83,8 +83,23 @@ it_has_modern_ccache() {
 	ccache --version
 }
 
-it_has_ninja_17() {
-	[[ "$(ninja --version)" = 1.7* ]]
+it_has_ninja_17_plus() {
+	local ninja_version
+	readonly ninja_version="$(ninja --version)"
+	local major minor
+	local IFS=.
+	# the patch number is unused, but needs to be there to absorb the third
+	# number
+	read -r major minor _ <<< "${ninja_version}"
+	if [ "${major}" -eq 1 ]; then
+		if [ "${minor}" -ge 7 ]; then
+			true
+		else
+			return 2
+		fi
+	else
+		return 1
+	fi
 }
 
 it_has_executables() {
