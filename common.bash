@@ -14,6 +14,9 @@ parse_opts() {
 			--interactive)
 				run_mode=interactive
 				;;
+			--interactive-after-icg)
+				run_mode=interactive_after_icg
+				;;
 			--use-stale-orca)
 				stale_orca=true
 				;;
@@ -214,6 +217,16 @@ run() {
 			;;
 		icg)
 			icg "${container_id}" "${relpath}" "${installcheck_mode}"
+			;;
+		interactive_after_icg)
+			if icg "${container_id}" "${relpath}" "${installcheck_mode}"; then
+				echo "ICG passed."
+				true
+			else
+				echo "ICG failed: returned status $?"
+			fi
+			docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
+			return 0
 			;;
 		*)
 			return 1

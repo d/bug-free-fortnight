@@ -44,6 +44,20 @@ This repository is a simple on-ramp to help contributors run tests (`installchec
    It will stop after starting the cluster, and you can follow the prompt to set
    any GUC before running `make installcheck`
 
+1. ICG failed, but uber script deletes the container! How do I look at the diff
+   against expected output?
+
+   `regression.diffs` is always copied out when tests fail, try to get the most out of that.
+
+1. uber script deletes the container when my tests fail! How do I attach to shit and debug?
+
+   If you need to debug after the tests fail (so you know which regress test to
+   re-run), run with the `--interactive-after-icg` flag
+   ```
+   streamline-43/uber.bash --interactive-after-icg
+   ```
+   It will run ICG, then stop in an interactive Bash prompt.
+
 1. Shit's *SLOW*
 
    If you are using Docker for Mac, [don't](VMware_Fusion.md).
