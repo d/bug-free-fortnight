@@ -1,5 +1,6 @@
 language: bash
 group: edge
+dist: xenial
 sudo: false
 addons:
   apt:
