@@ -73,13 +73,13 @@ build_orca() {
 	)
 	if is_anxious; then
 		(
-		trap "docker rm --force ${orca_container_id}" EXIT
+		trap "cleanup_container \"${orca_container_id}\"" EXIT
 		docker attach --sig-proxy=false "${orca_container_id}"
 		)
 	else
 		local orca_build_status
 		orca_build_status=$(
-		trap "docker rm --force ${orca_container_id}" INT
+		trap "cleanup_container \"${orca_container_id}\"" INT
 		docker wait "${orca_container_id}"
 		)
 		if [[ "${orca_build_status}" -ne 0 ]]; then
@@ -187,6 +187,12 @@ build_gpdb() {
 	run_in_container "${container_id}" "${path}" "${build_args[@]+${build_args[@]}}"
 }
 
+cleanup_container() {
+	local container_id
+	readonly container_id=$1
+	docker rm --force --volumes "${container_id}"
+}
+
 cleanup() {
 	local container_id
 	readonly container_id=$1
@@ -197,7 +203,7 @@ cleanup() {
 	workspace=$(workspace)
 
 	docker cp "${container_id}":/build/gpdb/src/test/regress/regression.diffs "${workspace}"/"${repo}"/src/test/regress || :
-	docker rm --force --volumes "${container_id}"
+	cleanup_container "${container_id}"
 }
 
 run() {
