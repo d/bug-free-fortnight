@@ -4,10 +4,11 @@ set -e -u -o pipefail
 set -o posix
 set -x
 
+readonly DIR=$(dirname "$0")
 # shellcheck source=guest_common.bash
-source $(dirname $0)/../guest_common.bash
+source "${DIR}"/../guest_common.bash
 # shellcheck source=streamline-43/guest_common.bash
-source $(dirname $0)/guest_common.bash
+source "${DIR}"/guest_common.bash
 
 _main() {
 	local repo

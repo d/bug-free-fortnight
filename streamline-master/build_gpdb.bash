@@ -4,10 +4,11 @@ set -e -u -o pipefail
 set -x
 set -o posix
 
+readonly DIR=$(dirname "$0")
 # shellcheck source=guest_common.bash
-source $(dirname $0)/../guest_common.bash
+source "${DIR}"/../guest_common.bash
 # shellcheck source=streamline-master/guest_common.bash
-source $(dirname $0)/guest_common.bash
+source "${DIR}"/guest_common.bash
 
 _main() {
 	local prefix
