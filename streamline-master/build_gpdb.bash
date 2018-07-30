@@ -44,7 +44,14 @@ parse_args() {
 	done
 }
 
+build_unittest() {
+	git grep -lF mock.mk | \
+		xargs dirname | \
+		xargs -n1 make -s -j8 -C
+}
+
 unittest() {
+	build_unittest
 	make -s -j8 -C /build/gpdb/src/backend unittest-check
 }
 
