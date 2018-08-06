@@ -1,7 +1,7 @@
 set -e -u -o pipefail
 
 # shellcheck source=guest_common.bash
-source $(dirname ${BASH_SOURCE[0]})/../guest_common.bash
+source "$(dirname "${BASH_SOURCE[0]}")"/../guest_common.bash
 # shellcheck source=streamline-master/guest_common.bash
 source guest_common.bash
 
