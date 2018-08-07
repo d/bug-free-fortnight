@@ -2,12 +2,6 @@ language: bash
 group: edge
 dist: xenial
 sudo: false
-addons:
-  apt:
-    sources:
-      - debian-sid
-    packages:
-      - shellcheck
 
 script:
   - ./test.bash
