@@ -59,7 +59,7 @@ icg() {
 	pollute_cluster_env
 
 	cd /build/gpdb
-	env "PGOPTIONS=$pgoptions" make -C src/test installcheck-good
+	env "PGOPTIONS=$pgoptions" make -C src/test/regress installcheck-good
 }
 
 _main "$@"
