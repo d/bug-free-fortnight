@@ -80,6 +80,7 @@ build_gpdb() {
 	--disable-gpcloud
 	--disable-pxf
 	--enable-gpfdist
+	--enable-depend
 	--enable-debug
 	"--prefix=${prefix}"
 	"--with-includes=${prefix}/include"
