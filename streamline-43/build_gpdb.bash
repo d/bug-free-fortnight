@@ -58,6 +58,15 @@ inject_orca() {
 	tar xf /orca/bin_orca.tar -C "${ext_dir}"
 }
 
+build_unittest() {
+	(
+	cd /build/gpdb
+	git grep -lF mock.mk | \
+		xargs -n1 dirname | \
+		xargs -n1 make -s -j8 -C
+	)
+}
+
 unittest() {
 	: "${LD_LIBRARY_PATH:=}"
 	(
@@ -67,6 +76,7 @@ unittest() {
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
 
+	build_unittest
 	make -s -j8 -C /build/gpdb/src/backend unittest-check
 	)
 }
