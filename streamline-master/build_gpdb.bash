@@ -131,7 +131,7 @@ make_cluster() {
 	set_user_env
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
-	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo DEFAULT_QD_MAX_CONNECT=150
 	)
 }
 
