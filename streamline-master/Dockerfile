@@ -20,6 +20,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	libbz2-dev \
 	libssl-dev \
 	zlib1g-dev \
+	libzstd-dev \
 	python-dev \
 	libyaml-dev \
 	libperl-dev \
