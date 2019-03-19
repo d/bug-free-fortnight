@@ -20,7 +20,21 @@ _main() {
 
 	it_has_executables
 
+	it_has_libraries
+
 	it_has_python_modules_visible_to_every_user
+}
+
+it_has_libraries() {
+	(
+		set -e
+		cd /tmp
+		ls -R /tmp
+		# locally vendor the necessary macros, e.g. pkg.m4
+		aclocal --install
+		autoreconf --force --install
+		./configure
+	)
 }
 
 it_has_locale() {

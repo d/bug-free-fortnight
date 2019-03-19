@@ -73,7 +73,9 @@ RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 ENV PAGER=less
 
 FROM base AS test
+RUN sudo apt-get install -y autoconf
 COPY test.bash /
+COPY configure.ac /tmp/
 RUN /test.bash
 
 FROM base
