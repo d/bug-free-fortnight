@@ -73,7 +73,8 @@ RUN ssh-keygen -f ~/.ssh/id_rsa -N '' \
 ENV PAGER=less
 
 FROM base AS test
-RUN sudo apt-get install -y autoconf
+# FIXME: how is pkg-config not part of the image under test??
+RUN sudo apt-get install -y autoconf pkg-config
 COPY test.bash /
 COPY configure.ac /tmp/
 RUN /test.bash

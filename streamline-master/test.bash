@@ -29,8 +29,8 @@ it_has_libraries() {
 	(
 		set -e
 		cd /tmp
-		ls -R /tmp
 		# locally vendor the necessary macros, e.g. pkg.m4
+		ls -R /tmp
 		aclocal --install
 		autoreconf --force --install
 		./configure
