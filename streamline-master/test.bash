@@ -69,7 +69,7 @@ it_has_modern_cmake() {
 
 check_version_major_minor() {
 	local version
-	readonly version=$(sed 's/[^0-9]\+/ /g' <<< "$1")
+	readonly version=${1//[^[:digit:]]/ }
 	local major minor
 	readonly major=$2
 	readonly minor=$3
