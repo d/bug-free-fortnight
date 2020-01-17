@@ -142,19 +142,6 @@ relpath_from_workspace() {
 	echo "${parent_dir}"/"${this_dir}"
 }
 
-make_sync_tools() {
-	local container_id
-	readonly container_id=$1
-	local relpath
-	readonly relpath=$2
-	local repo
-	readonly repo=$3
-
-	local -r path=/workspace/${relpath}/make_sync_tools.bash
-
-	run_in_container "${container_id}" "${path}" "${repo}"
-}
-
 build_gpdb() {
 	local container_id
 	readonly container_id=$1
