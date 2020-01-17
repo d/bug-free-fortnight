@@ -4,7 +4,6 @@ parse_opts() {
 	stale_orca=false
 	existential_angst=false
 	build_mode=opt
-	vanilla_orca=false
 	local opt
 	for opt in "$@"; do
 		case "${opt}" in
@@ -26,9 +25,6 @@ parse_opts() {
 			--enable-debug)
 				build_mode=debug
 				;;
-			--no-inject-orca)
-				vanilla_orca=true
-				;;
 		esac
 	done
 
@@ -49,10 +45,6 @@ is_anxious() {
 }
 
 build_orca() {
-	if [[ "${vanilla_orca:-}" = true ]]; then
-		return 0
-	fi
-
 	if [[ "${stale_orca:-}" = true ]]; then
 		return 0
 	fi
@@ -176,11 +168,6 @@ build_gpdb() {
 		build_args+=(
 		-d
 		)
-	fi
-
-	# FIXME: parameterize vanilla_orca
-	if [[ "${vanilla_orca:-}" = true ]]; then
-		build_args+=(-J)
 	fi
 
 	local -r path=/workspace/${relpath}/build_gpdb.bash
