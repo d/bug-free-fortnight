@@ -105,7 +105,7 @@ build_gpdb_impl() {
 	local -r configure_env_var="$2[@]"
 	local -r configure_flags_var="$3[@]"
 
-	clone_gpdb gpdb
+	clone_gpdb_with_submodules gpdb
 
 	cd /build/gpdb
 	env \
