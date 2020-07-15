@@ -5,7 +5,6 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	krb5-kdc \
 	iputils-ping \
 	net-tools \
-	python-pip \
 	gdb \
 	g++ \
 	make \
@@ -45,6 +44,9 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	sudo
 
 RUN locale-gen en_US.UTF-8
+
+RUN wget https://bootstrap.pypa.io/get-pip.py --output-document /dev/shm/get-pip.py && \
+	python /dev/shm/get-pip.py 'pip; python_version < "3"'
 
 RUN pip install \
 	psutil \
