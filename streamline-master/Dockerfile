@@ -16,6 +16,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	libapr1-dev \
 	libevent-dev \
 	libxml2-dev \
+	libxml2-utils \
 	libbz2-dev \
 	libssl-dev \
 	zlib1g-dev \
@@ -41,7 +42,9 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	unzip \
 	pigz \
 	iproute2 \
-	sudo
+	sudo \
+	systemtap-sdt-dev \
+	linux-tools-generic
 
 RUN locale-gen en_US.UTF-8
 
