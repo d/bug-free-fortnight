@@ -66,8 +66,6 @@ build_gpdb() {
 	local -a CONFIGURE_ENV
 	CONFIGURE_ENV=(
 	'LD_LIBRARY_PATH=/build/install/lib'
-	'CXX=ccache c++'
-	'CC=ccache cc'
 	)
 
 	local -a CONFIGURE_FLAGS=(
@@ -85,14 +83,20 @@ build_gpdb() {
 	"--prefix=${prefix}"
 	"--with-includes=${prefix}/include"
 	"--with-libs=${prefix}/lib"
+	'CXX=ccache c++'
+	'CC=ccache cc'
 	)
 
 	if [[ "${build_mode}" == debug ]]; then
-		CONFIGURE_ENV+=(
-		'CFLAGS=-O1 -fno-omit-frame-pointer'
-		)
 		CONFIGURE_FLAGS+=(
 		--enable-cassert
+		'CFLAGS=-O1 -fno-omit-frame-pointer'
+		'CXXFLAGS=-O1 -fno-omit-frame-pointer'
+		)
+	else
+		CONFIGURE_FLAGS+=(
+		'CFLAGS=-O3 -fno-omit-frame-pointer'
+		'CXXFLAGS=-O3 -fno-omit-frame-pointer'
 		)
 	fi
 
