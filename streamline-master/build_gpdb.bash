@@ -132,6 +132,8 @@ make_cluster() {
 	prefix=$1
 	: "${LD_LIBRARY_PATH:=}"
 	: "${PYTHONHOME:=$(default_python_home)}"
+	# poor man's ssh-keyscan
+	ssh -o StrictHostKeyChecking=no $(hostname) uname
 	(
 	set_user_env
 	# shellcheck disable=SC1090
