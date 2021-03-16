@@ -48,8 +48,8 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 RUN locale-gen en_US.UTF-8
 
-RUN wget https://bootstrap.pypa.io/get-pip.py --output-document /dev/shm/get-pip.py && \
-	python /dev/shm/get-pip.py 'pip; python_version < "3"'
+RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py --output-document /dev/shm/get-pip.py && \
+	python /dev/shm/get-pip.py
 
 RUN pip install \
 	psutil \
