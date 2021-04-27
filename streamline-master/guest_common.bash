@@ -9,5 +9,3 @@ pollute_cluster_env() {
 	# shellcheck disable=SC1091
 	source /build/gpdb/gpAux/gpdemo/gpdemo-env.sh
 }
-
-

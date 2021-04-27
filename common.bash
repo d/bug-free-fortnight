@@ -7,24 +7,24 @@ parse_opts() {
 	local opt
 	for opt in "$@"; do
 		case "${opt}" in
-			--planner|--no-optimizer)
-				installcheck_mode=planner
-				;;
-			--interactive)
-				run_mode=interactive
-				;;
-			--interactive-after-icg)
-				run_mode=interactive_after_icg
-				;;
-			--use-stale-orca)
-				stale_orca=true
-				;;
-			--existential-angst)
-				existential_angst=true
-				;;
-			--enable-debug)
-				build_mode=debug
-				;;
+		--planner | --no-optimizer)
+			installcheck_mode=planner
+			;;
+		--interactive)
+			run_mode=interactive
+			;;
+		--interactive-after-icg)
+			run_mode=interactive_after_icg
+			;;
+		--use-stale-orca)
+			stale_orca=true
+			;;
+		--existential-angst)
+			existential_angst=true
+			;;
+		--enable-debug)
+			build_mode=debug
+			;;
 		esac
 	done
 
@@ -54,25 +54,25 @@ build_orca() {
 
 	local orca_container_id
 	orca_container_id=$(
-	docker run --detach \
-		--volume gpdbccache:/ccache \
-		--volume orca:/orca \
-		--volume "${workspace}":/workspace:ro \
-		--env CCACHE_DIR=/ccache \
-		--env CCACHE_UMASK=0000 \
-		yolo/orcadev:centos5 \
-		/workspace/bug-free-fortnight/streamline-master/build_orca.bash
+		docker run --detach \
+			--volume gpdbccache:/ccache \
+			--volume orca:/orca \
+			--volume "${workspace}":/workspace:ro \
+			--env CCACHE_DIR=/ccache \
+			--env CCACHE_UMASK=0000 \
+			yolo/orcadev:centos5 \
+			/workspace/bug-free-fortnight/streamline-master/build_orca.bash
 	)
 	if is_anxious; then
 		(
-		trap "cleanup_container \"${orca_container_id}\"" EXIT
-		docker attach --sig-proxy=false "${orca_container_id}"
+			trap "cleanup_container \"${orca_container_id}\"" EXIT
+			docker attach --sig-proxy=false "${orca_container_id}"
 		)
 	else
 		local orca_build_status
 		orca_build_status=$(
-		trap "cleanup_container \"${orca_container_id}\"" INT
-		docker wait "${orca_container_id}"
+			trap "cleanup_container \"${orca_container_id}\"" INT
+			docker wait "${orca_container_id}"
 		)
 		if [[ "${orca_build_status}" -ne 0 ]]; then
 			docker logs "${orca_container_id}"
@@ -111,8 +111,8 @@ workspace() {
 
 absdir() {
 	(
-	cd "$(dirname "$0")"
-	pwd
+		cd "$(dirname "$0")"
+		pwd
 	)
 }
 
@@ -153,7 +153,7 @@ build_gpdb() {
 	local -a build_args=()
 	if [[ "${build_mode}" == debug ]]; then
 		build_args+=(
-		-d
+			-d
 		)
 	fi
 
@@ -191,26 +191,26 @@ run() {
 	readonly installcheck_mode=$4
 
 	case "${run_mode}" in
-		interactive)
-			docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
-			return 0
-			;;
-		icg)
-			icg "${container_id}" "${relpath}" "${installcheck_mode}"
-			;;
-		interactive_after_icg)
-			if icg "${container_id}" "${relpath}" "${installcheck_mode}"; then
-				echo "ICG passed."
-				true
-			else
-				echo "ICG failed: returned status $?"
-			fi
-			docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
-			return 0
-			;;
-		*)
-			return 1
-			;;
+	interactive)
+		docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
+		return 0
+		;;
+	icg)
+		icg "${container_id}" "${relpath}" "${installcheck_mode}"
+		;;
+	interactive_after_icg)
+		if icg "${container_id}" "${relpath}" "${installcheck_mode}"; then
+			echo "ICG passed."
+			true
+		else
+			echo "ICG failed: returned status $?"
+		fi
+		docker exec -ti "${container_id}" /workspace/"${relpath}"/db_shell.bash
+		return 0
+		;;
+	*)
+		return 1
+		;;
 	esac
 }
 
@@ -223,14 +223,14 @@ icg() {
 	readonly installcheck_mode=$3
 
 	case "${installcheck_mode}" in
-		orca)
-			run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash
-			;;
-		planner)
-			run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash -m planner
-			;;
-		*)
-			return 1
-			;;
+	orca)
+		run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash
+		;;
+	planner)
+		run_in_container "${container_id}" /workspace/"${relpath}"/icg.bash -m planner
+		;;
+	*)
+		return 1
+		;;
 	esac
 }

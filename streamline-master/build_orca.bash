@@ -15,8 +15,8 @@ _main() {
 	mkdir -p /build/src
 	mkdir -p /build/{install,xerces,gpos,orca}
 
-	local -i NPROC=$(( 3 * $(ncpu) / 2))
-	local -i MAX_LOAD=$(( 2 * $(ncpu) ))
+	local -i NPROC=$((3 * $(ncpu) / 2))
+	local -i MAX_LOAD=$((2 * $(ncpu)))
 	time build_xerces
 	time build_fat_orca
 

@@ -37,26 +37,26 @@ it_has_gcc() {
 
 it_has_libc_objects() {
 	(
-	set -e
-	pushd "$(mktemp -d -t simple_compilation.XXX)"
-	cat > hello.c <<HELLO
+		set -e
+		pushd "$(mktemp -d -t simple_compilation.XXX)"
+		cat >hello.c <<HELLO
 #include <string.h>
 int main() { return 0; }
 HELLO
-	gcc -D_GNU_SOURCE -o hello hello.c
-	./hello
+		gcc -D_GNU_SOURCE -o hello hello.c
+		./hello
 	)
 }
 
 it_has_working_cxx() {
 	(
-	pushd "$(mktemp -d -t simple_cxx.XXX)"
-	cat > hello.cc <<HELLO
+		pushd "$(mktemp -d -t simple_cxx.XXX)"
+		cat >hello.cc <<HELLO
 #include <iostream>
 int main() { std::cout << 1ul << '\\n'; }
 HELLO
-	c++ -O -o hello hello.cc
-	./hello
+		c++ -O -o hello hello.cc
+		./hello
 	)
 }
 
@@ -77,7 +77,7 @@ check_version_major_minor() {
 	local version_check_awk_script
 	readonly version_check_awk_script=$(mktemp -t version_check.XXX.awk)
 
-	cat > "${version_check_awk_script}" << CMAKE_VERSION_CHECK
+	cat >"${version_check_awk_script}" <<CMAKE_VERSION_CHECK
 	{
 		if (\$1 > ${major} || (\$1 == ${major} && \$2 >= ${minor}))
 			exit 0;
@@ -86,7 +86,7 @@ check_version_major_minor() {
 	}
 CMAKE_VERSION_CHECK
 
-	echo "${version}" | awk "$(< "${version_check_awk_script}")"
+	echo "${version}" | awk "$(<"${version_check_awk_script}")"
 }
 
 it_has_modern_ccache() {
@@ -120,10 +120,10 @@ it_has_executables() {
 
 it_has_python_modules_visible_to_every_user() {
 	local -a PYTHON_MODULES=(
-	psutil
-	lockfile
-	paramiko
-	epydoc
+		psutil
+		lockfile
+		paramiko
+		epydoc
 	)
 
 	local module

@@ -14,15 +14,15 @@ _main() {
 	parse_args "$@"
 
 	case "${installcheck_mode}" in
-		orca)
-			time icg::orca
-			;;
-		planner)
-			time icg::planner
-			;;
-		*)
-			false
-			;;
+	orca)
+		time icg::orca
+		;;
+	planner)
+		time icg::planner
+		;;
+	*)
+		false
+		;;
 	esac
 }
 
@@ -32,15 +32,15 @@ parse_args() {
 
 	local opt
 	local OPTIND OPTARG
-	while getopts :m: opt "${args[@]+${args[@]}}" ; do
+	while getopts :m: opt "${args[@]+${args[@]}}"; do
 		case "${opt}" in
-			m)
-				installcheck_mode=${OPTARG}
-				;;
-			*)
-				echo >&2 Unknown flag
-				return 1
-				;;
+		m)
+			installcheck_mode=${OPTARG}
+			;;
+		*)
+			echo >&2 Unknown flag
+			return 1
+			;;
 		esac
 	done
 }

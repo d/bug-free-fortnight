@@ -6,8 +6,8 @@ set_user_env() {
 
 default_python_home() {
 	python <<-EOF
-	import sys
-	print(sys.prefix)
+		import sys
+		print(sys.prefix)
 	EOF
 }
 
@@ -17,7 +17,7 @@ ext_path() {
 
 	# quoting around the pattern is not only unnecessary, it's also wrong,
 	# because word splitting happens **before** pathname expansion
-	local ext_dirs=( /build/gpdb/gpAux/ext/* )
+	local ext_dirs=(/build/gpdb/gpAux/ext/*)
 
 	# guard against empty
 	[[ "${ext_dirs[*]+x}" == "x" ]]
@@ -53,8 +53,8 @@ clone_gpdb_with_submodules() {
 
 	clone_gpdb "$1"
 	(
-	pushd /build/gpdb
-	rsync -r "/workspace/${repo}/.git/modules" .git
-	git submodule update --init --recursive
+		pushd /build/gpdb
+		rsync -r "/workspace/${repo}/.git/modules" .git
+		git submodule update --init --recursive
 	)
 }

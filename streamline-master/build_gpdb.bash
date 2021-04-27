@@ -31,25 +31,25 @@ parse_args() {
 
 	local opt
 	local OPTIND
-	while getopts :d opt "${args[@]+${args[@]}}" ; do
+	while getopts :d opt "${args[@]+${args[@]}}"; do
 		case "${opt}" in
-			d)
-				build_mode=debug
-				;;
-			*)
-				echo >&2 Unknown flag
-				return 1
-				;;
+		d)
+			build_mode=debug
+			;;
+		*)
+			echo >&2 Unknown flag
+			return 1
+			;;
 		esac
 	done
 }
 
 build_unittest() {
 	(
-	cd /build/gpdb
-	git grep -lF mock.mk | \
-		xargs -n1 dirname | \
-		xargs -n1 make -s -j8 -C
+		cd /build/gpdb
+		git grep -lF mock.mk |
+			xargs -n1 dirname |
+			xargs -n1 make -s -j8 -C
 	)
 }
 
@@ -58,41 +58,40 @@ unittest() {
 	make -s -j8 -C /build/gpdb/src/backend unittest-check
 }
 
-
 build_gpdb() {
 	local prefix
 	prefix=$1
 
 	local -a CONFIGURE_ENV
 	CONFIGURE_ENV=(
-	'LD_LIBRARY_PATH=/build/install/lib'
-	'CXX=ccache c++'
-	'CC=ccache cc'
+		'LD_LIBRARY_PATH=/build/install/lib'
+		'CXX=ccache c++'
+		'CC=ccache cc'
 	)
 
 	local -a CONFIGURE_FLAGS=(
-	--enable-orca
-	--with-gssapi
-	--enable-mapreduce
-	--with-perl
-	--with-libxml
-	--with-python
-	--disable-gpcloud
-	--disable-pxf
-	--enable-gpfdist
-	--enable-depend
-	--enable-debug
-	"--prefix=${prefix}"
-	"--with-includes=${prefix}/include"
-	"--with-libs=${prefix}/lib"
+		--enable-orca
+		--with-gssapi
+		--enable-mapreduce
+		--with-perl
+		--with-libxml
+		--with-python
+		--disable-gpcloud
+		--disable-pxf
+		--enable-gpfdist
+		--enable-depend
+		--enable-debug
+		"--prefix=${prefix}"
+		"--with-includes=${prefix}/include"
+		"--with-libs=${prefix}/lib"
 	)
 
 	if [[ "${build_mode}" == debug ]]; then
 		CONFIGURE_ENV+=(
-		'CFLAGS=-O1 -fno-omit-frame-pointer'
+			'CFLAGS=-O1 -fno-omit-frame-pointer'
 		)
 		CONFIGURE_FLAGS+=(
-		--enable-cassert
+			--enable-cassert
 		)
 	fi
 
@@ -118,8 +117,8 @@ build_gpdb_impl() {
 
 default_python_home() {
 	python <<-EOF
-	import sys
-	print(sys.prefix)
+		import sys
+		print(sys.prefix)
 	EOF
 }
 
@@ -129,10 +128,10 @@ make_cluster() {
 	: "${LD_LIBRARY_PATH:=}"
 	: "${PYTHONHOME:=$(default_python_home)}"
 	(
-	set_user_env
-	# shellcheck disable=SC1090
-	source "${prefix}"/greenplum_path.sh
-	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo DEFAULT_QD_MAX_CONNECT=150
+		set_user_env
+		# shellcheck disable=SC1090
+		source "${prefix}"/greenplum_path.sh
+		env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo DEFAULT_QD_MAX_CONNECT=150
 	)
 }
 
