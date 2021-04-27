@@ -1,7 +1,6 @@
 language: bash
 group: edge
-dist: xenial
-sudo: false
+dist: focal
 
 script:
   - ./test.bash
