@@ -22,6 +22,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	zlib1g-dev \
 	libzstd-dev \
 	python-dev \
+	python3-dev \
 	libyaml-dev \
 	libperl-dev \
 	libreadline-dev \
@@ -43,19 +44,11 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	pigz \
 	iproute2 \
 	sudo \
-	systemtap-sdt-dev \
+	pkg-config \
+	libxerces-c-dev \
 	linux-tools-generic
 
 RUN locale-gen en_US.UTF-8
-
-RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py --output-document /dev/shm/get-pip.py && \
-	python /dev/shm/get-pip.py
-
-RUN pip install \
-	psutil \
-	lockfile \
-	paramiko \
-	epydoc
 
 RUN mkdir /var/run/sshd
 

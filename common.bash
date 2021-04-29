@@ -117,7 +117,7 @@ absdir() {
 }
 
 set_ccache_max_size() {
-	local -r cache_size=8G
+	local -r cache_size=12G
 
 	docker run --rm \
 		--volume gpdbccache:/ccache \

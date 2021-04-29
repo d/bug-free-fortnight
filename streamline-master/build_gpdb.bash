@@ -18,8 +18,8 @@ _main() {
 	parse_args "$@"
 
 	mkdir -p ${prefix}
-	time tar xf /orca/bin_orca.tar -C ${prefix}
-	time tar xf /orca/bin_xerces.tar -C ${prefix}
+	# time tar xf /orca/bin_orca.tar -C ${prefix}
+	# time tar xf /orca/bin_xerces.tar -C ${prefix}
 	time build_gpdb ${prefix}
 	time unittest
 	time make_cluster ${prefix}
@@ -54,7 +54,7 @@ build_unittest() {
 }
 
 unittest() {
-	build_unittest
+	build_unittest || build_unittest
 	make -s -j8 -C /build/gpdb/src/backend unittest-check
 }
 
@@ -70,7 +70,7 @@ build_gpdb() {
 
 	local -a CONFIGURE_FLAGS=(
 	--enable-orca
-	--with-gssapi
+	--without-gssapi
 	--enable-mapreduce
 	--with-perl
 	--with-libxml
@@ -80,9 +80,10 @@ build_gpdb() {
 	--enable-gpfdist
 	--enable-depend
 	--enable-debug
+	--enable-debug-extensions
 	"--prefix=${prefix}"
-	"--with-includes=${prefix}/include"
-	"--with-libs=${prefix}/lib"
+	# "--with-includes=${prefix}/include"
+	# "--with-libs=${prefix}/lib"
 	'CXX=ccache c++'
 	'CC=ccache cc'
 	)
@@ -116,7 +117,7 @@ build_gpdb_impl() {
 		"${!configure_env_var}" \
 		./configure \
 		"${!configure_flags_var}"
-	make CXX='ccache c++' -s -j"$(nproc)" install --output-sync=target
+	make CXX='ccache c++' -s -j"$(nproc)" -l"$(( $(nproc) * 3 / 2 ))" install --output-sync=target
 
 }
 
@@ -138,7 +139,7 @@ make_cluster() {
 	set_user_env
 	# shellcheck disable=SC1090
 	source "${prefix}"/greenplum_path.sh
-	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo DEFAULT_QD_MAX_CONNECT=150
+	env BLDWRAP_POSTGRES_CONF_ADDONS='fsync=off statement_mem=250MB' make -C /build/gpdb/gpAux/gpdemo DEFAULT_QD_MAX_CONNECT=150 WITH_MIRRORS=no
 	)
 }
 
